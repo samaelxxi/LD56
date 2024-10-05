@@ -83,10 +83,4 @@ public class Electron : MonoBehaviour
         transform.DOScale(Vector3.zero, 1).SetEase(Ease.InBack)
             .OnComplete(() => Destroy(gameObject));
     }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 1);
-    }
 }
