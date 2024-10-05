@@ -818,7 +818,7 @@ PlayerSettings:
     PS5: DOTWEEN
     QNX: DOTWEEN
     Stadia: DOTWEEN
-    Standalone: DOTWEEN
+    Standalone: DOTWEEN;RH_SerializedDictionary
     VisionOS: DOTWEEN
     WebGL: DOTWEEN;RH_SerializedDictionary
     Windows Store Apps: DOTWEEN
