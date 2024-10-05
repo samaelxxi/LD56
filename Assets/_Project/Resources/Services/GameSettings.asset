@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0ce82196466054ba70df964a5c23f0, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  <MaxCollectedElectrons>k__BackingField: 3
+  <OatCombination>k__BackingField:
+    list:
+    - key: 0
+      value: 2
+    - key: 1
+      value: 2
+    - key: 2
+      value: 2
+    - key: 3
+      value: 2
+  <OatiumPrefab>k__BackingField: {fileID: 8227089913851884906, guid: 830037ec59e5daa40b03647cff05b0ff,
+    type: 3}

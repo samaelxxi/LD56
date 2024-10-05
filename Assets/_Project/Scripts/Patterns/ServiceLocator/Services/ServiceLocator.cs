@@ -84,6 +84,7 @@ public class ServiceLocator : MonoBehaviour
         if (!forced) 
             throw new ServiceLocatorException($"{serviceType.Name} hasn't been registered.");
 
+        Debug.Log($"Creating new instance of {serviceType.Name} forced");
         var service = serviceType.IsMonoBehaviour() ? 
             (TService) FindOrCreateMonoService(serviceType) : new TService();
         
@@ -103,6 +104,7 @@ public class ServiceLocator : MonoBehaviour
 
     static void RegisterNewInstance(Type serviceType)
     {
+        Debug.Log($"RegisterNewInstance {serviceType.Name}");
         var service = Activator.CreateInstance(serviceType);
         Services[serviceType] = service;
         if (service is IInitializable initializable)
@@ -111,9 +113,11 @@ public class ServiceLocator : MonoBehaviour
 
     static object FindOrCreateMonoService(Type serviceType)
     {
+        Debug.Log($"FindOrCreateMonoService {serviceType.Name}");
         var inGameService = FindObjectOfType(serviceType);
         if (inGameService == null)
         {
+            Debug.Log($"Creating new instance of {serviceType.Name}");
             var newObject = new GameObject();
             newObject.AddComponent(serviceType);
             newObject.name = serviceType.Name;
