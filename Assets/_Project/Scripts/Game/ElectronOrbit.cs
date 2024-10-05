@@ -1,51 +1,99 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ElectronOrbit : MonoBehaviour
 {
-    public Pigtom _pigtom;
+    public Transform _center;
     [SerializeField] float _orbitRadius = 5f;
     [SerializeField] float _orbitSpeed = 10f;
     [SerializeField] int _electronsNum = 1;
     [SerializeField] float _polarAngle; // Angle from the Y-axis
+    [SerializeField] float _polarSpeed = 0.1f;
+
+    public event Action OnElectronsNumChanged;
 
     public float OrbitRadius => _orbitRadius;
     public float PolarAngle => _polarAngle;
+    public int ElectronsNum => _electronsNum;
+    public ElectronType ElectronType => _electronType;
+    public IEnumerable<Electron> Electrons => electronAngles.Keys;
 
     private Dictionary<Electron, float> electronAngles = new();
+    ElectronType _electronType;
 
-    public void Setup(Pigtom pigtom, float orbitRadius, float orbitTime, 
-        int electronsNum, float polarAngle, Electron electronPrefab, Transform parent)
+    public void Setup(Transform center, float orbitRadius, float orbitTime, 
+        int maxElectrons, float polarAngle, ElectronType electronType, Transform parent,
+        float polarSpeed = 0)
     {
-        _pigtom = pigtom;
+        _center = center;
         _orbitRadius = orbitRadius;
         _orbitSpeed = 2 * Mathf.PI / orbitTime;
-        _electronsNum = electronsNum;
+        _electronsNum = 0;
         _polarAngle = polarAngle;
+        _polarSpeed = polarSpeed;
+        _electronType = electronType;
 
-        for (int i = 0; i < electronsNum; i++)
+        var factory = ServiceLocator.Get<ElectronsFactory>();
+        for (int i = 0; i < maxElectrons; i++)
         {
-            var electron = Instantiate(electronPrefab, parent);
-            AddElectron(electron, i); // Pass the index to position correctly
+            var electron = factory.GetElectron(electronType);
+            electron.gameObject.name = $"{_electronType.ToString()} Electron {i}";
+
+            AddElectron(electron, i, maxElectrons);
+            electron.transform.position = electron.TargetPosition; // Set the initial position
         }
     }
 
-    public void AddElectron(Electron electron, int index)
+
+    public void AddElectron(Electron electron, int index, int maxElectrons)
     {
         // Calculate the angle based on index for initial position
-        float angle = 2 * Mathf.PI * index / _electronsNum;
+        float angle = 2 * Mathf.PI * index / maxElectrons;
         electronAngles.Add(electron, angle);
         UpdateElectronPosition(electron); // Set the initial position
+        electron.Orbit = this;
+        electron.transform.parent = transform;
+        _electronsNum++;
+
+        OnElectronsNumChanged?.Invoke();
+    }
+
+    public void AddNewElectron(Electron electron)
+    {
+        AddElectron(electron, _electronsNum, _electronsNum+1);
+
+        if (_electronsNum == 1)
+            return;
+
+        List<float> angles = new();
+        foreach (var e in electronAngles.Keys)
+        {
+            if (e == electron)
+                continue;
+            angles.Add(electronAngles[e]);
+        }
+        float farthestAngle = MathExtensions.FindFarthestPoint(angles) * Mathf.Deg2Rad;
+
+        electronAngles[electron] = farthestAngle;
+    }
+
+    public Electron GetElectron(int index)
+    {
+        return electronAngles.Keys.ToList()[index];
     }
 
     public void RemoveElectron(Electron electron)
     {
         electronAngles.Remove(electron);
         _electronsNum--;
+        electron.Orbit = null;
+
+        OnElectronsNumChanged?.Invoke();
     }
 
-    public void Orbit()
+    public void FixedUpdate()
     {
         foreach (var electron in electronAngles.Keys.ToList())
         {
@@ -54,7 +102,7 @@ public class ElectronOrbit : MonoBehaviour
             electronAngles[electron] = angle;
         }
         // Update angles for circular motion
-        // _polarAngle += _orbitSpeed * 0.5f * Time.deltaTime; // Vertical rotation (slower for a better effect)
+        _polarAngle += _orbitSpeed * _polarSpeed * Time.deltaTime; // Vertical rotation (slower for a better effect)
 
         foreach (var electron in electronAngles.Keys)
         {
@@ -68,7 +116,8 @@ public class ElectronOrbit : MonoBehaviour
         Vector3 newPosition = GetElectronPosition(electron);
         
         // Set the position of the electron
-        electron.transform.localPosition = _pigtom.transform.position + newPosition;
+        Vector3 targetPos = _center.position + newPosition;
+        electron.TargetPosition = targetPos;
     }
 
     private Vector3 GetElectronPosition(Electron electron)
@@ -81,11 +130,10 @@ public class ElectronOrbit : MonoBehaviour
         float y = _orbitRadius * Mathf.Sin(angle);
         float z = _orbitRadius * Mathf.Cos(angle) * Mathf.Sin(_polarAngle);
 
-        // float x = _orbitRadius * Mathf.Sin(Mathf.PI / 4) * Mathf.Cos(angle);
-        // float y = _orbitRadius * Mathf.Sin(Mathf.PI / 4) * Mathf.Sin(angle);
-        // float z = _orbitRadius * Mathf.Cos(Mathf.PI / 4) + 2 * Mathf.Sin(_orbitSpeed * Time.time); // Oscillation in z
-
+        // Debug.Log($"{x}, {y}, {z}");
+        // Debug.LogWarning($"New angle: {angle}");
 
         return new Vector3(x, y, z);
     }
+
 }

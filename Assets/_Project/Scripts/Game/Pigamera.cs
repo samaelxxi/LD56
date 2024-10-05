@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[ExecuteInEditMode]
 public class Pigamera : MonoBehaviour
 {
     [SerializeField] Transform _target;

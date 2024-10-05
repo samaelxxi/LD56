@@ -22,8 +22,9 @@ public static class GameInitializer
     static void InitializeServices()
     {
         Debug.Log("GameInitializer.InitializeServices");
-        // ServiceLocator.RegisterSO<BulletFactory>("Services/BulletFactory");
-        // // ServiceLocator.RegisterSO<DebugDecals>("Services/DebugDecals");
+        ServiceLocator.RegisterSO<GameSettingsSO>("Services/GameSettings");
+        ServiceLocator.Get<GameSettingsSO>().Initialize(); // idk why not initialized in RegisterSO
+        ServiceLocator.RegisterSO<ElectronsFactory>("Services/ElectronsFactory");
         // ServiceLocator.RegisterSO<PrefabsHolder>("Services/PrefabsHolder");
         // ServiceLocator.RegisterSO<VFXManager>("Services/VFXManager");
         // ServiceLocator.RegisterSO<GlobalSO>("Services/GlobalSO");

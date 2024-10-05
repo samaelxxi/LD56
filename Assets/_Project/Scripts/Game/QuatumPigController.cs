@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,15 @@ public class QuatumPigController : MonoBehaviour
     [SerializeField] float maxSpeed = 5f;
     [SerializeField] float rotationSpeed = 100f;
 
+
+    public event Action OnEatElectron;
+    public event Action OnCollectElectron;
+    public event Action OnShootElectron;
+    public event Action ScrollWheelUp;
+    public event Action ScrollWheelDown;
+
     float _horizontalInput;
+    float _forwardInput;
     float _verticalInput;
     float _mouseXInput;
     float _mouseYInput;
@@ -17,6 +26,8 @@ public class QuatumPigController : MonoBehaviour
 
     float _currentForwardSpeed;
     float _currentStrafeSpeed;
+    float _currentVerticalSpeed;
+
 
 
     void Start()
@@ -27,9 +38,25 @@ public class QuatumPigController : MonoBehaviour
     void Update()
     {
         _horizontalInput = Input.GetAxis("Horizontal");
-        _verticalInput = Input.GetAxis("Vertical");
+        _forwardInput = Input.GetAxis("Vertical");
+        _verticalInput = Input.GetAxis("RealVertical");
+
+
+
         _mouseXInput = Input.GetAxis("Mouse X");
         _mouseYInput = Input.GetAxis("Mouse Y");
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            OnEatElectron?.Invoke();
+        if (Input.GetKeyDown(KeyCode.E))
+            OnCollectElectron?.Invoke();
+
+        if (Input.GetMouseButtonDown(0))
+            OnShootElectron?.Invoke();
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            ScrollWheelUp?.Invoke();
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            ScrollWheelDown?.Invoke();
     }
 
     void FixedUpdate()
@@ -37,10 +64,11 @@ public class QuatumPigController : MonoBehaviour
         // Handle movement
         Vector3 forward = transform.forward;
         Vector3 right = transform.right;
-        _currentForwardSpeed = Mathf.MoveTowards(_currentForwardSpeed, _verticalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
+        _currentForwardSpeed = Mathf.MoveTowards(_currentForwardSpeed, _forwardInput * maxSpeed, acceleration * Time.fixedDeltaTime);
         _currentStrafeSpeed = Mathf.MoveTowards(_currentStrafeSpeed, _horizontalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
+        _currentVerticalSpeed = Mathf.MoveTowards(_currentVerticalSpeed, _verticalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
 
-        Vector3 movement = _currentForwardSpeed * forward + _currentStrafeSpeed * right;
+        Vector3 movement = _currentForwardSpeed * forward + _currentStrafeSpeed * right + _currentVerticalSpeed * Vector3.up;
         movement = Vector3.ClampMagnitude(movement, maxSpeed);
         _rigidbody.AddForce(movement * Time.fixedDeltaTime, ForceMode.VelocityChange);
 
@@ -89,6 +117,9 @@ public class QuatumPigController : MonoBehaviour
         Vector3 targetEulerAngles = targetRotation.eulerAngles;
         targetEulerAngles.z = 0; // Constrain roll to 0
         targetRotation = Quaternion.Euler(targetEulerAngles);
+        var rot = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
 
-        _rigidbody.MoveRotation(Quaternion.Slerp(currentRotation, targetRotation, 50 * Time.fixedDeltaTime));    }
+        // _rigidbody.MoveRotation(Quaternion.Slerp(currentRotation, targetRotation, 50 * Time.fixedDeltaTime));    }
+        _rigidbody.MoveRotation(rot);
+    }
 }
