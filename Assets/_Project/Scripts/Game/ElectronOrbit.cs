@@ -15,6 +15,7 @@ public class ElectronOrbit : MonoBehaviour
     public event Action OnElectronsNumChanged;
 
     public float OrbitRadius => _orbitRadius;
+    public float Speed => _orbitSpeed;
     public float PolarAngle => _polarAngle;
     public int ElectronsNum => _electronsNum;
     public ElectronType ElectronType => _electronType;
@@ -88,7 +89,7 @@ public class ElectronOrbit : MonoBehaviour
     {
         electronAngles.Remove(electron);
         _electronsNum--;
-        electron.Orbit = null;
+        electron.SetOrbit(null);
 
         OnElectronsNumChanged?.Invoke();
     }

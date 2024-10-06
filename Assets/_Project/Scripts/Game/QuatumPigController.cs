@@ -69,6 +69,8 @@ public class QuatumPigController : MonoBehaviour
         // Handle movement
         Vector3 forward = transform.forward;
         Vector3 right = transform.right;
+        _horizontalInput *= 0.5f;
+        _verticalInput *= 0.5f;
         _currentForwardSpeed = Mathf.MoveTowards(_currentForwardSpeed, _forwardInput * maxSpeed, acceleration * Time.fixedDeltaTime);
         _currentStrafeSpeed = Mathf.MoveTowards(_currentStrafeSpeed, _horizontalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
         _currentVerticalSpeed = Mathf.MoveTowards(_currentVerticalSpeed, _verticalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
@@ -93,6 +95,10 @@ public class QuatumPigController : MonoBehaviour
         // Constrain roll
         Vector3 targetEulerAngles = targetRotation.eulerAngles;
         targetEulerAngles.z = 0; // Constrain roll to 0
+        targetEulerAngles.x = Mathf.Clamp(targetEulerAngles.x > 180 ? targetEulerAngles.x - 360 : targetEulerAngles.x, -60, 60);
+
+
+
         targetRotation = Quaternion.Euler(targetEulerAngles);
         var rot = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
 

@@ -14,7 +14,7 @@ public class QuatumPig : MonoBehaviour
     [SerializeField] Transform _piggoMesh;
     [SerializeField] Transform _piggoFan;
     
-    ElectronOrbit _electronOrbit;
+    ElectronOrbit _pigOrbit;
 
     Electron _preparedForShootElectron;
     float _shootPreparationTime = 0;
@@ -39,11 +39,11 @@ public class QuatumPig : MonoBehaviour
         electronsObj.transform.parent = transform;
         var orbit = electronsObj.AddComponent<ElectronOrbit>();
         orbit.Setup(transform, 1.5f, 5, 0, 10, ElectronType.Red, electronsObj.transform, 0.1f);
-        _electronOrbit = orbit;
+        _pigOrbit = orbit;
 
         _piggoMesh.DOLocalMoveZ(0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
 
-        _electronsTrigger.SetIgnoredOrbit(_electronOrbit);
+        _electronsTrigger.SetIgnoredOrbit(_pigOrbit);
     }
 
     void Start()
@@ -54,7 +54,7 @@ public class QuatumPig : MonoBehaviour
 
     private void ShootElectron()
     {
-        if (_electronOrbit.ElectronsNum == 0 && _preparedForShootElectron == null)
+        if (_pigOrbit.ElectronsNum == 0 && _preparedForShootElectron == null)
             return;
 
         if (_preparedForShootElectron == null)
@@ -65,6 +65,7 @@ public class QuatumPig : MonoBehaviour
         {
             _preparedForShootElectron.TargetPosition = transform.position + transform.forward * 2;
             _preparedForShootElectron.Launch(transform.forward * 0.1f);
+            _preparedForShootElectron.SetEmitting(true);
             Debug.Log("Electron launched");
             _preparedForShootElectron.transform.parent = null;
             _preparedForShootElectron = null;
@@ -73,26 +74,27 @@ public class QuatumPig : MonoBehaviour
 
     private void OnChangeElectron(bool next)
     {
-        if (_preparedForShootElectron == null || _electronOrbit.ElectronsNum == 0)
+        if (_preparedForShootElectron == null || _pigOrbit.ElectronsNum == 0)
             return;
 
         Electron nextElectron;
 
         if (next)
-            nextElectron = _electronOrbit.GetElectron(0);
+            nextElectron = _pigOrbit.GetElectron(0);
         else
-            nextElectron = _electronOrbit.GetElectron(_electronOrbit.ElectronsNum - 1);
+            nextElectron = _pigOrbit.GetElectron(_pigOrbit.ElectronsNum - 1);
         
-        _electronOrbit.RemoveElectron(nextElectron);
-        _electronOrbit.AddNewElectron(_preparedForShootElectron);
+        _pigOrbit.RemoveElectron(nextElectron);
+        _pigOrbit.AddNewElectron(_preparedForShootElectron);
         _preparedForShootElectron = nextElectron;
+        _shootPreparationTime = Time.time;
     }
 
     private void FixedUpdate()
     {
         if (_preparedForShootElectron && Time.time - _shootPreparationTime > 3)
         {
-            _electronOrbit.AddNewElectron(_preparedForShootElectron);
+            _pigOrbit.AddNewElectron(_preparedForShootElectron);
             _preparedForShootElectron = null;
         }
         else if (_preparedForShootElectron)
@@ -110,7 +112,7 @@ public class QuatumPig : MonoBehaviour
 
     private void PrepareForShooting()
     {
-        _preparedForShootElectron = _electronOrbit.GetElectron(0);
+        _preparedForShootElectron = _pigOrbit.GetElectron(0);
         _preparedForShootElectron.Orbit.RemoveElectron(_preparedForShootElectron);
 
         _shootPreparationTime = Time.time;
@@ -118,8 +120,8 @@ public class QuatumPig : MonoBehaviour
 
     private void RotateAssFan()
     {
-        float targetSpeed = 60 * Time.deltaTime * _controller.TotalForwardSpeed;
-        _fanSpeed = Mathf.MoveTowards(_fanSpeed, targetSpeed, 0.2f);
+        float targetSpeed = 40 * Time.deltaTime * _controller.TotalForwardSpeed;
+        _fanSpeed = Mathf.MoveTowards(_fanSpeed, targetSpeed, 0.3f);
         _piggoFan.Rotate(Vector3.up, _fanSpeed, Space.Self);
     }
 
@@ -176,7 +178,8 @@ public class QuatumPig : MonoBehaviour
             var electron = _electronsTrigger.NearestElectron;
             if (electron.Orbit != null)
                 electron.Orbit.RemoveElectron(electron);
-            _electronOrbit.AddNewElectron(electron);
+            _pigOrbit.AddNewElectron(electron);
+            electron.SetEmitting(false);
             OnElectronActivity(electron);
             Debug.Log("Electron collected");
         }
@@ -187,7 +190,7 @@ public class QuatumPig : MonoBehaviour
         var nearestElectron = _electronsTrigger.NearestElectron;
 
         return _electronsTrigger.NearestElectron != null 
-            && _electronOrbit.ElectronsNum < GameSettings.MaxCollectedElectrons
+            && _pigOrbit.ElectronsNum < GameSettings.MaxCollectedElectrons
             && _preparedForShootElectron != nearestElectron
                 && !nearestElectron.IsLaunched;
     }
