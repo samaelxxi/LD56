@@ -35,7 +35,7 @@ public class Tapke : MonoBehaviour
 
         RelaxABit(ateElectron: false);
 
-        _body.transform.DOLocalMoveY(0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        _body.transform.DOLocalMoveY(0.4f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     void Update()
@@ -112,7 +112,6 @@ public class Tapke : MonoBehaviour
     private void PlanMovementToPigtom()
     {
         _targetPigtom = ChooseTargetPigtom();
-        Debug.Log($"Chosen pigtom: {_targetPigtom}");
 
         Ray ray = new(transform.position, _targetPigtom.transform.position - transform.position);
         if (Physics.SphereCast(ray, 1.5f, out RaycastHit hit, 10000, Globals.PigtomMask))
