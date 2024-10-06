@@ -19,6 +19,9 @@ public class QuatumPig : MonoBehaviour
     Electron _preparedForShootElectron;
     float _shootPreparationTime = 0;
     float _fanSpeed = 0;
+    PigUI _ui;
+    RaycastHit[] _pigtoms = new RaycastHit[1];
+    Pigtom pigtomToTransform;
 
 
     public void Awake()
@@ -41,6 +44,11 @@ public class QuatumPig : MonoBehaviour
         _piggoMesh.DOLocalMoveZ(0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
 
         _electronsTrigger.SetIgnoredOrbit(_electronOrbit);
+    }
+
+    void Start()
+    {
+        _ui = ServiceLocator.Get<PigUI>();
     }
 
 
@@ -94,24 +102,10 @@ public class QuatumPig : MonoBehaviour
 
 
         // no time to catch all possible events
-        if (CanCollectElectron())
-            ServiceLocator.Get<PigUI>().OnElectronInSight();
-        else
-            ServiceLocator.Get<PigUI>().OnElectronOutOfSight();
-
-        // // Get the local rotation as a Quaternion
-        // Quaternion localRotation = _piggoFan.localRotation;
-
-        // // Step 2: Create a rotation only for the x-axis increment (based on speed and deltaTime)
-        float targetSpeed = 60 * Time.deltaTime * _controller.TotalForwardSpeed;
-        _fanSpeed = Mathf.MoveTowards(_fanSpeed, targetSpeed, 0.2f);
-
-        _piggoFan.Rotate(Vector3.up, _fanSpeed, Space.Self);
 
 
-        // // Step 3: Apply this increment to the current local rotation
-        // _piggoFan.localRotation = localRotation * xRotationIncrement;
-
+        ManageUI();
+        RotateAssFan();
     }
 
     private void PrepareForShooting()
@@ -122,22 +116,57 @@ public class QuatumPig : MonoBehaviour
         _shootPreparationTime = Time.time;
     }
 
+    private void RotateAssFan()
+    {
+        float targetSpeed = 60 * Time.deltaTime * _controller.TotalForwardSpeed;
+        _fanSpeed = Mathf.MoveTowards(_fanSpeed, targetSpeed, 0.2f);
+        _piggoFan.Rotate(Vector3.up, _fanSpeed, Space.Self);
+    }
+
+    private void ManageUI()
+    {
+        if (CanCollectElectron())
+            _ui.OnElectronInSight();
+        else
+            _ui.OnElectronOutOfSight();
+
+        var pigtom = Physics.RaycastNonAlloc(transform.position, transform.forward, _pigtoms, 6, Globals.PigtomMask);
+        pigtomToTransform = null;
+
+        if (pigtom > 0)
+        {
+            var hit = _pigtoms[0];
+
+            if (hit.collider != null && hit.collider.TryGetComponent(out Pigtom p) &&
+                !p.StartedTransformation)
+            {
+                _ui.SetMakeOatiumActive(true);
+                pigtomToTransform = p;
+            }
+            else
+                _ui.SetMakeOatiumActive(false);
+        }
+        else
+            _ui.SetMakeOatiumActive(false);
+    }
+
     private void OnElectronActivity(Electron electron)
     {
-        // if (_electronsTrigger.NearestElectron != null && 
-        //         _electronOrbit.ElectronsNum < GameSettings.MaxCollectedElectrons)
-        //     ServiceLocator.Get<PigUI>().OnElectronInSight();
-        // else
-        //     ServiceLocator.Get<PigUI>().OnElectronOutOfSight();
     }
 
     private void EatElectronClicked()
     {
-        if (_electronsTrigger.NearestElectron != null)
+        if (pigtomToTransform != null)
         {
-            _electronsTrigger.NearestElectron.gameObject.SetActive(false);
-            Debug.Log("Electron eaten");
+            pigtomToTransform.StartTransformation();
+            pigtomToTransform = null;
+            Debug.Log("Pigtom transformed");
         }
+        // else if (_electronsTrigger.NearestElectron != null)
+        // {
+        //     _electronsTrigger.NearestElectron.gameObject.SetActive(false);
+        //     Debug.Log("Electron eaten");
+        // }
     }
 
     private void CollectElectronClicked()
@@ -161,5 +190,11 @@ public class QuatumPig : MonoBehaviour
             && _electronOrbit.ElectronsNum < GameSettings.MaxCollectedElectrons
             && _preparedForShootElectron != nearestElectron
                 && !nearestElectron.IsLaunched;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * 6);
     }
 }

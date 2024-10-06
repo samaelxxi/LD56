@@ -60,6 +60,8 @@ public class QuatumPigController : MonoBehaviour
             ScrollWheelUp?.Invoke();
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
             ScrollWheelDown?.Invoke();
+
+        _rigidbody.angularVelocity = Vector3.zero;
     }
 
     void FixedUpdate()

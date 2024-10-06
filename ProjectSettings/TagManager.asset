@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Atom
   - Electron
+  - Pig
   layers:
   - Default
   - TransparentFX

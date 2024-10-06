@@ -29,7 +29,6 @@ public class Electron : MonoBehaviour
 
     public void Awake()
     {
-        Debug.Log($"Electron {name} awake");
         _startSpeed = _speed;
     }
 

@@ -19,10 +19,11 @@ public class Pigtom : MonoBehaviour
     [SerializeField] private float minOrbitTime = 5f;
     [SerializeField] private float maxOrbitTime = 15f;
     [SerializeField] private Transform nucleus;
-    [SerializeField] private float nucleusRadius = 20;
+    [SerializeField] private float nucleusRadius = 10;
 
 
     public float NucleusRadius => nucleusRadius;
+    public bool StartedTransformation { get; private set; }
 
     private List<ElectronOrbit> _orbits = new();
     GameObject _orbitsObj;
@@ -31,11 +32,15 @@ public class Pigtom : MonoBehaviour
     {
         ServiceLocator.Get<PigtomsManager>().AddPigtom(this);
 
+        GetComponent<SphereCollider>().radius = nucleusRadius;
+
         _orbitsObj = new GameObject("Orbits");
         _orbitsObj.transform.parent = transform;
 
-        minOrbitRadius = Mathf.Max(minOrbitRadius, (nucleusRadius + 1) / 2);
-        nucleus.localScale = Vector3.one * nucleusRadius;
+        minOrbitRadius = Mathf.Max(minOrbitRadius, (nucleusRadius + 1));
+        if (maxOrbitRadius < minOrbitRadius)
+            maxOrbitRadius = minOrbitRadius + 3;
+        nucleus.localScale = Vector3.one * nucleusRadius * 2;
 
         int orbits = orbitElectrons.Count;
 
@@ -50,7 +55,7 @@ public class Pigtom : MonoBehaviour
         if (IsReadyForOatium())
         {
             Debug.Log("Ready for Oatium");
-            BecomeOautium();
+            // BecomeOautium();
         }
     }
 
@@ -147,7 +152,33 @@ public class Pigtom : MonoBehaviour
         }
     }
 
+
+    public void StartTransformation()
+    {
+        if (StartedTransformation)
+            return;
+        StartedTransformation = true;
+
+        if (IsReadyForOatium())
+        {
+            BecomeOautium();
+        }
+        else
+        {
+            BecomeVerbatium();
+        }
+    }
+
     public void BecomeOautium()
+    {
+        SuckElectronsAndShrinkAfter();
+
+        Vector3 position = transform.position;  // closure
+        StaticCoroutine.StartInSec(() => Instantiate(GameSettings.OatiumPrefab, 
+            position, Quaternion.identity), 6);
+    }
+
+    private void SuckElectrons()
     {
         foreach (var orbit in _orbits)
         {
@@ -162,11 +193,18 @@ public class Pigtom : MonoBehaviour
                     .OnComplete(() => electron.BeDestroyed());
             }
         }
+    }
+
+    private void SuckElectronsAndShrinkAfter()
+    {
+        SuckElectrons();
+
         transform.DOScale(Vector3.zero, 2).SetEase(Ease.InBack).SetDelay(4)
             .OnComplete(() => Destroy(gameObject));
+    }
 
-        Vector3 position = transform.position;
-        StaticCoroutine.StartInSec(() => Instantiate(GameSettings.OatiumPrefab, 
-            position, Quaternion.identity), 6);
+    public void BecomeVerbatium()
+    {
+         SuckElectronsAndShrinkAfter();
     }
 }
