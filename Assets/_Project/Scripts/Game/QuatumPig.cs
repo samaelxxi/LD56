@@ -38,17 +38,20 @@ public class QuatumPig : MonoBehaviour
         var electronsObj = new GameObject("PigOrbit");
         electronsObj.transform.parent = transform;
         var orbit = electronsObj.AddComponent<ElectronOrbit>();
-        orbit.Setup(transform, 1.5f, 5, 0, 10, ElectronType.Red, electronsObj.transform, 0.1f);
+        orbit.Setup(transform, 2, 5, 0, 10, ElectronType.Red, electronsObj.transform, 0.1f);
         _pigOrbit = orbit;
 
         _piggoMesh.DOLocalMoveZ(0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
 
         _electronsTrigger.SetIgnoredOrbit(_pigOrbit);
+
+        Game.Instance.QuatumPig = this;
     }
 
     void Start()
     {
         _ui = ServiceLocator.Get<PigUI>();
+        Game.Instance.StartNewGame();
     }
 
 
@@ -63,12 +66,14 @@ public class QuatumPig : MonoBehaviour
         }
         else
         {
-            _preparedForShootElectron.TargetPosition = transform.position + transform.forward * 2;
+            _preparedForShootElectron.TargetPosition = transform.position + transform.forward * 4;
             _preparedForShootElectron.Launch(transform.forward * 0.1f);
             _preparedForShootElectron.SetEmitting(true);
             Debug.Log("Electron launched");
             _preparedForShootElectron.transform.parent = null;
             _preparedForShootElectron = null;
+
+            _controller.AddSomeForce(-transform.forward * 20);
         }
     }
 
@@ -99,7 +104,7 @@ public class QuatumPig : MonoBehaviour
         }
         else if (_preparedForShootElectron)
         {
-            _preparedForShootElectron.TargetPosition = transform.position + transform.forward * 2;
+            _preparedForShootElectron.TargetPosition = transform.position + transform.forward * 4;
         }
 
 

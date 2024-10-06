@@ -45,9 +45,12 @@ public class QuatumPigController : MonoBehaviour
         _verticalInput = Input.GetAxis("RealVertical");
 
 
+        float newMouseX = Input.GetAxis("Mouse X");
+        float newMouseY = Input.GetAxis("Mouse Y");
 
-        _mouseXInput = Input.GetAxis("Mouse X");
-        _mouseYInput = Input.GetAxis("Mouse Y");
+
+        _mouseXInput = Mathf.Lerp(_mouseXInput, newMouseX, 0.2f);
+        _mouseYInput = Mathf.Lerp(_mouseYInput, newMouseY, 0.2f);
 
         if (Input.GetKeyDown(KeyCode.Q))
             OnEatElectron?.Invoke();
@@ -62,6 +65,11 @@ public class QuatumPigController : MonoBehaviour
             ScrollWheelDown?.Invoke();
 
         _rigidbody.angularVelocity = Vector3.zero;
+    }
+
+    public void AddSomeForce(Vector3 force)
+    {
+        _rigidbody.AddForce(force, ForceMode.Impulse);
     }
 
     void FixedUpdate()
@@ -81,6 +89,8 @@ public class QuatumPigController : MonoBehaviour
         _rigidbody.AddForce(movement * Time.fixedDeltaTime, ForceMode.VelocityChange);
 
 
+        // _mouseXInput = 1;
+        // _mouseYInput = -0.1f;
 
         // Handle rotation
         float yaw = _mouseXInput * rotationSpeed * Time.fixedDeltaTime;
@@ -102,7 +112,7 @@ public class QuatumPigController : MonoBehaviour
         targetRotation = Quaternion.Euler(targetEulerAngles);
         var rot = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
 
-        // _rigidbody.MoveRotation(Quaternion.Slerp(currentRotation, targetRotation, 50 * Time.fixedDeltaTime));    }
+        // rot = Quaternion.Slerp(currentRotation, targetRotation, 50 * Time.fixedDeltaTime);
         _rigidbody.MoveRotation(rot);
     }
 }

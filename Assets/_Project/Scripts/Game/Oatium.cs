@@ -27,7 +27,14 @@ public class Oatium : MonoBehaviour
     IEnumerator BeEaten()
     {
         transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InBack);
-        yield return new WaitForSeconds(1.5f);
+        float time = Time.time;
+        var pig = Game.Instance.QuatumPig.transform;
+        Game.Instance.CollectOatium();
+        while (Time.time - time < 1.5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, pig.position, Time.deltaTime * 5);
+            yield return null;
+        }
         Destroy(gameObject);
     }
 }

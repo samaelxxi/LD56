@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class Pigamera : MonoBehaviour
 {
     [SerializeField] Transform _target;
@@ -14,6 +14,8 @@ public class Pigamera : MonoBehaviour
     [SerializeField] float rotationSmoothSpeed = 0.125f;
 
 
+    public enum UpdateType { Update, LateUpdate, FixedUpdate }
+    [SerializeField] UpdateType _updateType = UpdateType.LateUpdate;
 
 
     void OnValidate()
@@ -29,7 +31,25 @@ public class Pigamera : MonoBehaviour
     }
 
 
+    void LateUpdate()
+    {
+        if (_updateType == UpdateType.LateUpdate)
+            UpdateThings();
+    }
+
+    void Update()
+    {
+        if (_updateType == UpdateType.Update)
+            UpdateThings();
+    }
+
     void FixedUpdate()
+    {
+        if (_updateType == UpdateType.FixedUpdate)
+            UpdateThings();
+    }
+
+    void UpdateThings()
     {
         Vector3 relativeOffset = _target.TransformDirection(_offset);
         Vector3 desiredPosition = _target.position + relativeOffset;

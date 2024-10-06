@@ -10,6 +10,7 @@ public class GameSettingsSO : ScriptableObject, Services.IRegistrable, Services.
     [field: SerializeField] public int MaxCollectedElectrons { get; private set; }
     [field: SerializeField] public SerializableDictionary<ElectronType, int> OatCombination { get; private set; }
     [field: SerializeField] public Oatium OatiumPrefab { get; private set; }
+    [field: SerializeField] public float GameSessionTimeSeconds { get; private set; }
 
     public void Initialize()
     {

@@ -16,4 +16,5 @@ public static class GameSettings
     public static int MaxCollectedElectrons => _gameSettings.MaxCollectedElectrons;
     public static SerializableDictionary<ElectronType, int> OatCombination => _gameSettings.OatCombination;
     public static Oatium OatiumPrefab => _gameSettings.OatiumPrefab;
+    public static float GameSessionTimeSeconds => _gameSettings.GameSessionTimeSeconds;
 }

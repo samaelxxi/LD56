@@ -223,14 +223,14 @@ TrailRenderer:
       m_ColorSpace: 0
       m_NumColorKeys: 3
       m_NumAlphaKeys: 3
-    numCornerVertices: 5
-    numCapVertices: 5
+    numCornerVertices: 7
+    numCapVertices: 15
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.05
   m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
