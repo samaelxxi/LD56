@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public static class MathExtensions
@@ -32,6 +33,54 @@ public static class MathExtensions
 
         return c + (value - a) * (d - c) / (b - a);
     }
+
+    public static Vector3 Bezier(Vector3 start, Vector3 control, Vector3 end, float t)
+    {
+        return Mathf.Pow(1 - t, 2) * start + 2 * (1 - t) * t * control + Mathf.Pow(t, 2) * end;
+    }
+
+    public static Tween BezierFlyToTween(this Transform transform, Vector3 target, float duration, Vector3? control = null)
+    {
+        if (control == null)
+            control = transform.position + (target - transform.position) * 0.5f + Vector3.up * Mathf.Sqrt(Vector3.Distance(transform.position, target));
+
+        Vector3 start = transform.position;  // closure
+        return DOVirtual.Float(0, 1, duration, t => transform.position = Bezier(start, control.Value, target, t))
+            .SetEase(Ease.Linear);
+    }
+
+    public static float CalculateBezierDistance(Vector3 start, Vector3 control, Vector3 end, int segments = 100)
+    {
+        float distance = 0f;
+        Vector3 previousPoint = start;
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float t = i / (float)segments;
+            Vector3 currentPoint = Bezier(start, control, end, t);
+            distance += Vector3.Distance(previousPoint, currentPoint);
+            previousPoint = currentPoint;
+        }
+
+        return distance;
+    }
+
+    public static Tween BezierFlyToTweenWithSpeed(this Transform transform, Vector3 target, float speed, Vector3? control = null)
+    {
+        if (control == null)
+            control = transform.position + (target - transform.position) * 0.5f + Vector3.up * Mathf.Sqrt(Vector3.Distance(transform.position, target));
+
+        float distance = CalculateBezierDistance(transform.position, control.Value, target);
+        float duration = distance / speed;
+        Vector3 start = transform.position;  // closure
+
+        Debug.Log($"Distance: {distance}, Duration: {duration}");
+
+        return DOVirtual.Float(0, 1, duration, t => transform.position 
+            = Bezier(start, control.Value, target, t))
+            .SetEase(Ease.Linear);
+    }
+
 
     // Helper function to normalize angles within [0, 360)
     public static float NormalizeAngle(float angle)

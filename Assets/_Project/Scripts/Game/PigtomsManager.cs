@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -10,10 +11,16 @@ public class PigtomsManager : Services.MonoRegistrable
 
 
     public IEnumerable<Pigtom> Pigtoms => _pigtoms;
+    public IEnumerable<Pigtom> CoolPigtoms => _pigtoms.Where(p => !p.StartedTransformation);
 
 
     public void AddPigtom(Pigtom pigtom)
     {
         _pigtoms.Add(pigtom);
+    }
+
+    public void RemovePigtom(Pigtom pigtom)
+    {
+        _pigtoms.Remove(pigtom);
     }
 }

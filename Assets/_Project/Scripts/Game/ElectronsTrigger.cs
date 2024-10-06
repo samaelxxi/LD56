@@ -43,13 +43,11 @@ public class ElectronsTrigger : MonoBehaviour
             Debug.Log(e.name);
 
 
-        Debug.Log("OnTriggerEnter " + other.name);
 
         if (other.TryGetComponent(out Electron electron) 
                 && electron.Orbit != _ignoredOrbit &&
                 !_electrons.Contains(electron))
         {
-            Debug.Log("OnTriggerEnter Electron" + electron.name);
             _electrons.Add(electron);
             OnElectronEnter?.Invoke(electron);
         }
@@ -62,7 +60,6 @@ public class ElectronsTrigger : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("OnTriggerExit " + other.name);
 
         if (other.TryGetComponent(out Electron electron)
                 && electron.Orbit != _ignoredOrbit)

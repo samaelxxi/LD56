@@ -29,7 +29,7 @@ public class ElectronOrbit : MonoBehaviour
         float polarSpeed = 0)
     {
         _center = center;
-        _orbitRadius = orbitRadius / 2;
+        _orbitRadius = orbitRadius;
         _orbitSpeed = 2 * Mathf.PI / orbitTime;
         _electronsNum = 0;
         _polarAngle = polarAngle;

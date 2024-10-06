@@ -36,8 +36,6 @@ public class Electron : MonoBehaviour
         _startSpeed = _speed;
         _trailRenderer = GetComponent<TrailRenderer>();
 
-        transform.localScale = transform.localScale * 2;
-
         _trailRenderer.widthMultiplier = transform.localScale.x + 0.1f;
 
     }
@@ -88,7 +86,7 @@ public class Electron : MonoBehaviour
             if (!_destroyed)
             {
                 var pigtoms = ServiceLocator.Get<PigtomsManager>();  // overlap sphere doesn't work ;(
-                foreach (var pigtom in pigtoms.Pigtoms)
+                foreach (var pigtom in pigtoms.CoolPigtoms)
                 {
                     if (Vector3.Distance(transform.position, pigtom.transform.position) < pigtom.NucleusRadius + 2)
                     {

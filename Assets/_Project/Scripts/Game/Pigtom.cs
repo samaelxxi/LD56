@@ -32,8 +32,6 @@ public class Pigtom : MonoBehaviour
     {
         ServiceLocator.Get<PigtomsManager>().AddPigtom(this);
 
-        nucleusRadius /= 2;
-
         GetComponent<SphereCollider>().radius = nucleusRadius;
 
         _orbitsObj = new GameObject("Orbits");
@@ -159,6 +157,8 @@ public class Pigtom : MonoBehaviour
     {
         if (StartedTransformation)
             return;
+
+        ServiceLocator.Get<PigtomsManager>().RemovePigtom(this);
         StartedTransformation = true;
 
         if (IsReadyForOatium())
