@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -1345,8 +1345,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 621929165406667238, guid: 484bc35dae0cbdd4bbec550ee8687229,
         type: 3}
-      propertyPath: m_Constraints
-      value: 64
+      propertyPath: m_AngularDrag
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1778223383518043938, guid: 484bc35dae0cbdd4bbec550ee8687229,
         type: 3}
@@ -1403,41 +1403,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuantumPig
       objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.70710677
-      objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.70710677
-      objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3775726163358910111, guid: 484bc35dae0cbdd4bbec550ee8687229,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1456,6 +1421,36 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 241509224}
+    - target: {fileID: 3057801461113738849, guid: f120aff2e5ad0854e89627def2b34f1c,
+        type: 3}
+      propertyPath: m_Antialiasing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468444165531959663, guid: f120aff2e5ad0854e89627def2b34f1c,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468444165531959663, guid: f120aff2e5ad0854e89627def2b34f1c,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468444165531959663, guid: f120aff2e5ad0854e89627def2b34f1c,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468444165531959663, guid: f120aff2e5ad0854e89627def2b34f1c,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3468444165531959663, guid: f120aff2e5ad0854e89627def2b34f1c,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3586381749900897610, guid: f120aff2e5ad0854e89627def2b34f1c,
         type: 3}
       propertyPath: m_Name
