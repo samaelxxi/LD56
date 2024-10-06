@@ -35,7 +35,11 @@ public class Electron : MonoBehaviour
     {
         _startSpeed = _speed;
         _trailRenderer = GetComponent<TrailRenderer>();
+
+        transform.localScale = transform.localScale * 2;
+
         _trailRenderer.widthMultiplier = transform.localScale.x + 0.1f;
+
     }
 
     public void SetEmitting(bool shouldEmit)
