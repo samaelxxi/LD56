@@ -16,6 +16,8 @@ public class QuatumPigController : MonoBehaviour
     public event Action ScrollWheelUp;
     public event Action ScrollWheelDown;
 
+    public float TotalForwardSpeed => _totalForwardSpeed;
+
     float _horizontalInput;
     float _forwardInput;
     float _verticalInput;
@@ -27,6 +29,7 @@ public class QuatumPigController : MonoBehaviour
     float _currentForwardSpeed;
     float _currentStrafeSpeed;
     float _currentVerticalSpeed;
+    float _totalForwardSpeed;
 
 
 
@@ -70,37 +73,9 @@ public class QuatumPigController : MonoBehaviour
 
         Vector3 movement = _currentForwardSpeed * forward + _currentStrafeSpeed * right + _currentVerticalSpeed * Vector3.up;
         movement = Vector3.ClampMagnitude(movement, maxSpeed);
+        _totalForwardSpeed = _currentForwardSpeed;
         _rigidbody.AddForce(movement * Time.fixedDeltaTime, ForceMode.VelocityChange);
 
-        // // Handle rotation
-        // float yaw = _mouseXInput * rotationSpeed * Time.fixedDeltaTime;
-        // float pitch = -_mouseYInput * rotationSpeed * Time.fixedDeltaTime;
-
-        // Vector3 torque = new Vector3(pitch, yaw, 0);
-        // _rigidbody.AddTorque(torque, ForceMode.VelocityChange);
-
-        // // Constrain roll
-        // Vector3 currentEulerAngles = _rigidbody.rotation.eulerAngles;
-        // currentEulerAngles.z = 0; // Constrain roll to 0
-        // _rigidbody.rotation = Quaternion.Euler(currentEulerAngles);
-
-
-        // // Handle movement
-        // Vector3 forward = transform.forward;
-        // Vector3 right = transform.right;
-        // _currentForwardSpeed = Mathf.MoveTowards(_currentForwardSpeed, _verticalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
-        // _currentStrafeSpeed = Mathf.MoveTowards(_currentStrafeSpeed, _horizontalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
-
-        // Vector3 movement = _currentForwardSpeed * forward + _currentStrafeSpeed * right;
-        // movement = Vector3.ClampMagnitude(movement, maxSpeed);
-        // _rigidbody.MovePosition(_rigidbody.position + movement * Time.fixedDeltaTime);
-
-
-
-        // Vector3 movement = _verticalInput * maxSpeed * Time.fixedDeltaTime * transform.forward;
-        // movement += _horizontalInput * maxSpeed * Time.fixedDeltaTime * transform.right;
-        // movement = Vector3.ClampMagnitude(movement, maxSpeed);
-        // _rigidbody.MovePosition(_rigidbody.position + movement);
 
 
         // Handle rotation

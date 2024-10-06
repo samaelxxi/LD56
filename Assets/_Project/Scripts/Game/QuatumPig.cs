@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 
 [SelectionBase]
@@ -10,11 +11,14 @@ public class QuatumPig : MonoBehaviour
 {
     [SerializeField] ElectronsTrigger _electronsTrigger;
     [SerializeField] QuatumPigController _controller;
+    [SerializeField] Transform _piggoMesh;
+    [SerializeField] Transform _piggoFan;
     
     ElectronOrbit _electronOrbit;
 
     Electron _preparedForShootElectron;
     float _shootPreparationTime = 0;
+    float _fanSpeed = 0;
 
 
     public void Awake()
@@ -33,6 +37,8 @@ public class QuatumPig : MonoBehaviour
         var orbit = electronsObj.AddComponent<ElectronOrbit>();
         orbit.Setup(transform, 1.5f, 5, 0, 10, ElectronType.Red, electronsObj.transform, 0.1f);
         _electronOrbit = orbit;
+
+        _piggoMesh.DOLocalMoveZ(0.1f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
 
         _electronsTrigger.SetIgnoredOrbit(_electronOrbit);
     }
@@ -88,21 +94,24 @@ public class QuatumPig : MonoBehaviour
 
 
         // no time to catch all possible events
-        var nearestElectron = _electronsTrigger.NearestElectron;
-
         if (CanCollectElectron())
-        {
-            // Debug.Log(@$"{_electronsTrigger.NearestElectron} != null  :
-            // {_electronsTrigger.NearestElectron != null}
-            // && {_electronOrbit.ElectronsNum < GameSettings.MaxCollectedElectrons}
-            // && {_preparedForShootElectron != nearestElectron}
-            //     && {!nearestElectron.IsLaunched}");
-
-
             ServiceLocator.Get<PigUI>().OnElectronInSight();
-        }
         else
             ServiceLocator.Get<PigUI>().OnElectronOutOfSight();
+
+        // // Get the local rotation as a Quaternion
+        // Quaternion localRotation = _piggoFan.localRotation;
+
+        // // Step 2: Create a rotation only for the x-axis increment (based on speed and deltaTime)
+        float targetSpeed = 60 * Time.deltaTime * _controller.TotalForwardSpeed;
+        _fanSpeed = Mathf.MoveTowards(_fanSpeed, targetSpeed, 0.2f);
+
+        _piggoFan.Rotate(Vector3.up, _fanSpeed, Space.Self);
+
+
+        // // Step 3: Apply this increment to the current local rotation
+        // _piggoFan.localRotation = localRotation * xRotationIncrement;
+
     }
 
     private void PrepareForShooting()
