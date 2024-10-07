@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059e1f620668f1e40b2546374cfb0720, type: 3}
+  m_Name: MainMenuWorldCreator
+  m_EditorClassIdentifier: 
+  <WorldSize>k__BackingField: {x: 20, y: 20, z: 150}
+  <PigtomPrefab>k__BackingField: {fileID: 3734303571725091256, guid: 3f22b45637fb510498d72a25c867c916,
+    type: 3}
+  <PigtomsQuantity>k__BackingField: 10
+  <PigtomHoles>k__BackingField: 10
+  <DesiredAverageDistance>k__BackingField: 5
+  <DesiredAverageDistanceDeviation>k__BackingField: 2
+  <PigtomRadius>k__BackingField: 2
+  <PigtomRadiusDeviation>k__BackingField: 1
+  <MinOrbitRadius>k__BackingField: 1
+  <MaxOrbitRadius>k__BackingField: 2
+  <MinElectronsPerPigtom>k__BackingField: 1
+  <MaxElectronsPerPigtom>k__BackingField: 3
+  <MinElectronOrbitingTime>k__BackingField: 14
+  <MaxElectronOrbitingTime>k__BackingField: 18
+  <MinTapkes>k__BackingField: 2
+  <MaxTapkes>k__BackingField: 3

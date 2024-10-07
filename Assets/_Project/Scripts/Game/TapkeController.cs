@@ -166,6 +166,7 @@ public class TapkeController : MonoBehaviour
         {
             Debug.Log(center);
             Debug.LogError("Initial latitude or longitude is NaN");
+            latitude = 0;
             Debug.Log($"Relative Position: {relativePosition} | Radius: {radius}");
             Debug.Log($"Latitude: {latitude}, Longitude: {longitude}");
         }

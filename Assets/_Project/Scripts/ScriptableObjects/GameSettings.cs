@@ -23,4 +23,7 @@ public static class GameSettings
 
     public static float FailSpawnChance => _gameSettings.FailSpawnChance;
     public static float TapkeSpawnChance => _gameSettings.TapkeSpawnChance;
+
+
+    public static float MoveSensetivity { get; set; } = 1;
 }

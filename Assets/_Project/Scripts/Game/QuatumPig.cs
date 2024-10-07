@@ -34,6 +34,7 @@ public class QuatumPig : MonoBehaviour
         _controller.OnShootElectron += ShootElectron;
         _controller.ScrollWheelUp += () => OnChangeElectron(true);
         _controller.ScrollWheelDown += () => OnChangeElectron(false);
+        _controller.OnEscapePressed += EscapePressed;
 
         var electronsObj = new GameObject("PigOrbit");
         electronsObj.transform.parent = transform;
@@ -51,7 +52,7 @@ public class QuatumPig : MonoBehaviour
 
     void Start()
     {
-        _ui = ServiceLocator.Get<PigUI>();
+        _ui = Game.Instance.PigUI;
         Game.Instance.StartNewGame();
     }
 
@@ -76,6 +77,14 @@ public class QuatumPig : MonoBehaviour
 
             _controller.AddSomeForce(-transform.forward * 20);
         }
+    }
+
+    private void EscapePressed()
+    {
+        if (Game.Instance.IsPaused)
+            Game.Instance.ResumeGame();
+        else
+            Game.Instance.PauseGame();
     }
 
     private void OnChangeElectron(bool next)

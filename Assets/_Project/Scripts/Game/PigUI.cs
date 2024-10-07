@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine.UI;
 
 
-public class PigUI : MonoBehaviour, Services.IRegistrable
+public class PigUI : MonoBehaviour
 {
     [SerializeField] private GameObject _electronInSigthWindow;
     [SerializeField] private GameObject _makeOatiumButton;
     [SerializeField] private TMPro.TMP_Text _oatiumNumberText;
     [SerializeField] private TMPro.TMP_Text _remainingTimeText;
+    [SerializeField] private GameObject _controls;
+    [SerializeField] private Slider _mouseSlider;
+    [SerializeField] private GameObject _pauseMenu;
+    [SerializeField] private GameObject _endMenu;
+    [SerializeField] private TMPro.TMP_Text _endOatiumNumberText;
 
 
     public bool IsMakeOatiumButtonActive => _makeOatiumButton.activeSelf;
@@ -20,7 +26,10 @@ public class PigUI : MonoBehaviour, Services.IRegistrable
         _electronInSigthWindow.SetActive(false);
         _makeOatiumButton.SetActive(false);
 
-        ServiceLocator.Register(this);
+        Game.Instance.PigUI = this;
+
+        _mouseSlider.value = GameSettings.MoveSensetivity;
+        _mouseSlider.onValueChanged.AddListener(delegate { OnMouseSliderChanged(); });
     }
 
     public void OnElectronInSight()
@@ -53,5 +62,55 @@ public class PigUI : MonoBehaviour, Services.IRegistrable
         TimeSpan timeSpan = TimeSpan.FromSeconds(time);
         _remainingTimeText.text = timeSpan.ToString(@"mm\:ss");
         // _remainingTimeText.text = time.ToString("F2");
+    }
+
+    public void OnMouseSliderChanged()
+    {
+        GameSettings.MoveSensetivity = _mouseSlider.value;
+    }
+
+    public void ShowPauseMenu()
+    {
+        _pauseMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+    }
+
+    public void HidePauseMenu()
+    {
+        _pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+        _controls.SetActive(false);
+
+    }
+
+    public void ShowGameOver()
+    {
+        Time.timeScale = 0;
+        _endMenu.SetActive(true);
+        _endOatiumNumberText.text = _oatiumNumberText.text;
+    }
+
+    public void OnContinueClicked()
+    {
+        Game.Instance.ResumeGame();
+    }
+
+    public void OnGoToMenuClicked()
+    {
+        Game.Instance.GoToMainMenu();
+    }
+
+    public void ShowControls()
+    {
+        _controls.SetActive(true);
+        _pauseMenu.SetActive(false);
+    }
+
+    public void HideControls()
+    {
+        _controls.SetActive(false);
+        _pauseMenu.SetActive(true);
     }
 }

@@ -15,6 +15,7 @@ public class QuatumPigController : MonoBehaviour
     public event Action OnShootElectron;
     public event Action ScrollWheelUp;
     public event Action ScrollWheelDown;
+    public event Action OnEscapePressed;
 
     public float TotalForwardSpeed => _totalForwardSpeed;
 
@@ -45,12 +46,12 @@ public class QuatumPigController : MonoBehaviour
         _verticalInput = Input.GetAxis("RealVertical");
 
 
-        float newMouseX = Input.GetAxis("Mouse X");
-        float newMouseY = Input.GetAxis("Mouse Y");
+        float newMouseX = Input.GetAxis("Mouse X") * GameSettings.MoveSensetivity;
+        float newMouseY = Input.GetAxis("Mouse Y") * GameSettings.MoveSensetivity;
 
 
-        _mouseXInput = Mathf.Lerp(_mouseXInput, newMouseX, 0.2f);
-        _mouseYInput = Mathf.Lerp(_mouseYInput, newMouseY, 0.2f);
+        _mouseXInput = Mathf.Lerp(_mouseXInput, newMouseX, 0.2f *  GameSettings.MoveSensetivity);
+        _mouseYInput = Mathf.Lerp(_mouseYInput, newMouseY, 0.2f *  GameSettings.MoveSensetivity);
 
         if (Input.GetKeyDown(KeyCode.Q))
             OnEatElectron?.Invoke();
@@ -63,6 +64,9 @@ public class QuatumPigController : MonoBehaviour
             ScrollWheelUp?.Invoke();
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
             ScrollWheelDown?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            OnEscapePressed?.Invoke();
 
         _rigidbody.angularVelocity = Vector3.zero;
     }
@@ -89,9 +93,6 @@ public class QuatumPigController : MonoBehaviour
         _rigidbody.AddForce(movement * Time.fixedDeltaTime, ForceMode.VelocityChange);
 
 
-        // _mouseXInput = 1;
-        // _mouseYInput = -0.1f;
-
         // Handle rotation
         float yaw = _mouseXInput * rotationSpeed * Time.fixedDeltaTime;
         float pitch = -_mouseYInput * rotationSpeed * Time.fixedDeltaTime;
@@ -110,7 +111,7 @@ public class QuatumPigController : MonoBehaviour
 
 
         targetRotation = Quaternion.Euler(targetEulerAngles);
-        var rot = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        var rot = Quaternion.RotateTowards(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime * GameSettings.MoveSensetivity);
 
         // rot = Quaternion.Slerp(currentRotation, targetRotation, 50 * Time.fixedDeltaTime);
         _rigidbody.MoveRotation(rot);
