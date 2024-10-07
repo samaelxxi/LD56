@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 233614116834672549}
   - component: {fileID: 3286591243140432919}
   m_Layer: 0
-  m_Name: Oatium
+  m_Name: OatiumIDK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
