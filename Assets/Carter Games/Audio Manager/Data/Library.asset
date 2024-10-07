@@ -209,6 +209,19 @@ MonoBehaviour:
           option: 1
           tabPos: 1
         showDynamicTime: 0
+    - key: assFan-efcc75e6-32e5-4b08-9e6b-58fb19ea2b90
+      value:
+        key: assFan
+        id: assFan-efcc75e6-32e5-4b08-9e6b-58fb19ea2b90
+        defaultKey: assFan-efcc75e6-32e5-4b08-9e6b-58fb19ea2b90
+        value: {fileID: 8300000, guid: df36c4e2a83205b4e8ddfad24148041c, type: 3}
+        path: Assets/_Project/Audio/assFan.mp3
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
   libraryReverseLookup:
     list:
     - key: atomTransform1
@@ -239,6 +252,8 @@ MonoBehaviour:
       value: oatSpawn-a847f706-dd58-45f4-ba88-913a28fc3e96
     - key: musicIGuess
       value: musicIGuess-5e1e6a13-b58a-432b-9748-d5345fe63282
+    - key: assFan
+      value: assFan-efcc75e6-32e5-4b08-9e6b-58fb19ea2b90
   groups:
     list:
     - key: 58d2c867-55b9-43df-bf3a-d10eacb26a2d
@@ -258,6 +273,22 @@ MonoBehaviour:
   mixersReverseLookup:
     list: []
   tracks:
-    list: []
+    list:
+    - key: c6d39fd1-1570-440b-b32b-9fa864f9747a
+      value:
+        listKey: Music
+        tracks:
+        - clipId: musicIGuess-5e1e6a13-b58a-432b-9748-d5345fe63282
+          startTime: 0
+          endTime: 97
+        loop: 1
+        shuffle: 0
+        useCustomTransitions: 0
+        startingTransition: 0
+        startingTransitionDuration: 0
+        switchTrackTransition: 0
+        switchingTransitionDuration: 0
   tracksReverseLookup:
-    list: []
+    list:
+    - key: Music
+      value: c6d39fd1-1570-440b-b32b-9fa864f9747a

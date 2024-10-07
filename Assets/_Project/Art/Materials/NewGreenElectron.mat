@@ -29,9 +29,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Freshnel: 0.7
+    - _MinAlpha: 0.619
     m_Colors:
-    - _Color: {r: 0.4470588, g: 0.64705884, b: 0.2313725, a: 1}
+    - _Color: {r: 1.4637235, g: 2.1185474, b: 0.75754106, a: 1}
     - _InterColor: {r: 2.7617173, g: 3.9986255, b: 1.4395052, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8338929821964457310

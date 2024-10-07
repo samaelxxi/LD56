@@ -14,6 +14,8 @@ public class QuatumPig : MonoBehaviour
     [SerializeField] QuatumPigController _controller;
     [SerializeField] Transform _piggoMesh;
     [SerializeField] Transform _piggoFan;
+    [SerializeField] AudioSource _assFanAudio;
+    [SerializeField] float _assFanVolume = 1;
     
     ElectronOrbit _pigOrbit;
 
@@ -145,6 +147,11 @@ public class QuatumPig : MonoBehaviour
     {
         float targetSpeed = 40 * Time.deltaTime * _controller.TotalForwardSpeed;
         _fanSpeed = Mathf.MoveTowards(_fanSpeed, targetSpeed, 0.3f);
+
+        float maxFanSpeed = 40 * Time.deltaTime * _controller.MaxSpeed;
+        float volume = Mathf.Abs(_fanSpeed) / maxFanSpeed * _assFanVolume;
+        Debug.Log($"maxFanSpeed: {maxFanSpeed}, _fanSpeed: {_fanSpeed}, volume: {volume}");
+        _assFanAudio.volume = volume;
         _piggoFan.Rotate(Vector3.up, _fanSpeed, Space.Self);
     }
 

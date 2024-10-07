@@ -17,6 +17,7 @@ public class PigUI : MonoBehaviour
     [SerializeField] private Slider _mouseSlider;
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _endMenu;
+    [SerializeField] private GameObject _escHint;
     [SerializeField] private TMPro.TMP_Text _endOatiumNumberText;
 
 
@@ -105,6 +106,11 @@ public class PigUI : MonoBehaviour
         AudioManager.Play("click");
         _controls.SetActive(true);
         _pauseMenu.SetActive(false);
+    }
+
+    public void HideEscHint()
+    {
+        _escHint.SetActive(false);
     }
 
     public void HideControls()

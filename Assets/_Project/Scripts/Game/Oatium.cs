@@ -6,6 +6,7 @@ using DG.Tweening;
 public class Oatium : MonoBehaviour
 {
     Tween _tween;
+    bool _isEaten = false;
 
     public void Start()
     {
@@ -21,8 +22,12 @@ public class Oatium : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (_isEaten)
+            return;
+
         if (other.CompareTag("Pig"))
         {
+            _isEaten = true;
             StartCoroutine(BeEaten());
         }
     }

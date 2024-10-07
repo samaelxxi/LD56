@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059e1f620668f1e40b2546374cfb0720, type: 3}
   m_Name: WorldCreatorSettings
   m_EditorClassIdentifier: 
+  <WorldCenter>k__BackingField: {x: 0, y: 0, z: 0}
   <WorldSize>k__BackingField: {x: 300, y: 200, z: 300}
   <PigtomPrefab>k__BackingField: {fileID: 3734303571725091256, guid: 3f22b45637fb510498d72a25c867c916,
     type: 3}
-  <PigtomsQuantity>k__BackingField: 25
+  <PigtomsQuantity>k__BackingField: 35
   <PigtomHoles>k__BackingField: 10
   <DesiredAverageDistance>k__BackingField: 10
   <DesiredAverageDistanceDeviation>k__BackingField: 5

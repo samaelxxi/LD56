@@ -31,6 +31,7 @@ public class Electron : MonoBehaviour
 
 
     TrailRenderer _trailRenderer;
+    Gradient _gradient;
 
     public void Awake()
     {
@@ -38,6 +39,11 @@ public class Electron : MonoBehaviour
         _trailRenderer = GetComponent<TrailRenderer>();
 
         _trailRenderer.widthMultiplier = transform.localScale.x + 0.1f;
+        _gradient = new Gradient();
+        _gradient.SetKeys(
+            _trailRenderer.colorGradient.colorKeys,
+            _trailRenderer.colorGradient.alphaKeys
+        );
 
     }
 
@@ -54,10 +60,14 @@ public class Electron : MonoBehaviour
 
             var tween1 = DOTween.To(() => _trailRenderer.time, x => _trailRenderer.time = x, 0, 1.5f)
                             .OnComplete(() => _trailRenderer.emitting = false);
-            // var tween2 = DOTween.To(() => _trailRenderer.widthMultiplier, x => _trailRenderer.widthMultiplier = x, 0, 0.5f);
+            var tween2 = DOTween.To(() => _trailRenderer.widthMultiplier, x => _trailRenderer.widthMultiplier = x, 0, 0.5f);
+            var oldGradient = _trailRenderer.colorGradient;
+
+            
+
 
             sequence.Append(tween1);
-            // sequence.Join(tween2);
+            sequence.Join(tween2);
 
             trailTimeTween = sequence;
         }
@@ -69,6 +79,8 @@ public class Electron : MonoBehaviour
             Sequence sequence = DOTween.Sequence();
 
             var tween1 = DOTween.To(() => _trailRenderer.time, x => _trailRenderer.time = x, 2, 1);
+
+            _trailRenderer.colorGradient = _gradient;
 
 
             _trailRenderer.widthMultiplier = transform.localScale.x + 0.1f;

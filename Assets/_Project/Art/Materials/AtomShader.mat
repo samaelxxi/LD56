@@ -103,7 +103,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.8
+    - _Alpha: 0.85
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -119,19 +119,19 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Freshnelpower: 2.93
+    - _Freshnelpower: 3.97
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise: 20
-    - _NoiseScale: 8
+    - _Noise: 100
+    - _NoiseScale: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ScrollingSpeed: 0.05
+    - _ScrollingSpeed: 0.2
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -146,9 +146,9 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _InnerColor: {r: 1, g: 1, b: 1, a: 1}
+    - _InnerColor: {r: 2.309434, g: 2.309434, b: 2.309434, a: 1}
     - _NoiseSpeed: {r: -0.1, g: 0.1, b: 0, a: 0}
-    - _OuterColor: {r: 1.0012052, g: 1.0012052, b: 1.0012052, a: 1}
+    - _OuterColor: {r: 0.0732583, g: 0, b: 1.9125333, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TextureColor: {r: 5.193718, g: 4.0197954, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -32,7 +32,7 @@ public class Game : Singleton<Game>
 
     void Start()
     {
-        AudioManager.Play("musicIGuess", volume: 0.5f);
+        MusicManager.Play("Music", volume: 0.5f);
 
         Debug.Log("Game.Start");
     }
@@ -108,6 +108,7 @@ public class Game : Singleton<Game>
         _gameIsRunning = false;
         ShowCursor();
         Game.Instance.PigUI.ShowPauseMenu();
+        Game.Instance.PigUI.HideEscHint();
     }
 
     public void ResumeGame()

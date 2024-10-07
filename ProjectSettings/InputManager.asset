@@ -489,7 +489,7 @@ InputManager:
     m_Name: RealVertical
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: left ctrl
+    negativeButton: c
     positiveButton: space
     altNegativeButton: 
     altPositiveButton: 

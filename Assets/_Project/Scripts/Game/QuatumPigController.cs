@@ -9,6 +9,8 @@ public class QuatumPigController : MonoBehaviour
     [SerializeField] float maxSpeed = 5f;
     [SerializeField] float rotationSpeed = 100f;
 
+    public float MaxSpeed => maxSpeed;
+
 
     public event Action OnEatElectron;
     public event Action OnCollectElectron;
@@ -65,7 +67,7 @@ public class QuatumPigController : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
             ScrollWheelDown?.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Tab))
             OnEscapePressed?.Invoke();
 
         _rigidbody.angularVelocity = Vector3.zero;
