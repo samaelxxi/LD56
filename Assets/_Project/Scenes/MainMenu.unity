@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.02
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4f8f287a3b27b17468614ec388635008, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5f180445c14f79a4287521758eb4ef28, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2161,6 +2161,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 570010085}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &695380909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695380911}
+  - component: {fileID: 695380910}
+  m_Layer: 0
+  m_Name: OatsSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &695380910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695380909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb2437c87c2c474ba650e2e582f8f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _oatiumPrefab: {fileID: 8227089913851884906, guid: e02afc620e0de744caae72d04485ca0b,
+    type: 3}
+  _spawnArea: {fileID: 983296374}
+--- !u!4 &695380911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695380909}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.997139, y: 108.97291, z: 168.43382}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &695799630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3466,6 +3513,59 @@ PrefabInstance:
       addedObject: {fileID: 328042829}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 484bc35dae0cbdd4bbec550ee8687229, type: 3}
+--- !u!1 &983296373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 983296375}
+  - component: {fileID: 983296374}
+  m_Layer: 2
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &983296374
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983296373}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.344975, y: 5.6517286, z: 3.8658807}
+  m_Center: {x: 0.21176, y: -0.077830076, z: -1.4329343}
+--- !u!4 &983296375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983296373}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9347844, z: -0, w: 0.35521555}
+  m_LocalPosition: {x: -3.95, y: 0, z: 0.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &989756205
 GameObject:
   m_ObjectHideFlags: 0
@@ -4685,6 +4785,11 @@ PrefabInstance:
       value: QuantumPig
       objectReference: {fileID: 0}
     - target: {fileID: 6468338527560595531, guid: 484bc35dae0cbdd4bbec550ee8687229,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472066183220205833, guid: 484bc35dae0cbdd4bbec550ee8687229,
         type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5996,3 +6101,5 @@ SceneRoots:
   - {fileID: 972559643}
   - {fileID: 1451208487}
   - {fileID: 267346339}
+  - {fileID: 983296375}
+  - {fileID: 695380911}

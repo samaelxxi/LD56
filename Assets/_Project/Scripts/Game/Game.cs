@@ -13,11 +13,14 @@ public class Game : Singleton<Game>
     private int _oatiumCollected = 0;
     private float _startTime;
 
+    private int _totalOatiumCollected;
+
     private bool _gameIsRunning;
     private bool _isGameOver;
     private bool _isPaused;
 
     public bool IsPaused => _isPaused;
+    public int TotalOatiumCollected => _totalOatiumCollected;
 
 
     public override void Awake()
@@ -126,6 +129,7 @@ public class Game : Singleton<Game>
     public void CollectOatium()
     {
         _oatiumCollected++;
+        _totalOatiumCollected++;
         AudioManager.Play("ateOat", volume: 0.5f);
         Game.Instance.PigUI.SetOatiumNumber(_oatiumCollected);
     }

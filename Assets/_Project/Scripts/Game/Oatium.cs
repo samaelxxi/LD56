@@ -12,7 +12,7 @@ public class Oatium : MonoBehaviour
     {
         Debug.Log("Oatium is here!");
         float offset = Random.Range(0, 1f);
-        _tween = transform.DOLocalMoveY(transform.localPosition.y + 1, 2f).SetEase(Ease.InOutSine)
+        _tween = transform.DOLocalMoveY(transform.localPosition.y + 1 * transform.localScale.y / 2, 2f).SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo).SetDelay(offset);
         var rot = transform.rotation.eulerAngles;
         rot.y += 360;

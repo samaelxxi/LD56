@@ -150,7 +150,6 @@ public class QuatumPig : MonoBehaviour
 
         float maxFanSpeed = 40 * Time.deltaTime * _controller.MaxSpeed;
         float volume = Mathf.Abs(_fanSpeed) / maxFanSpeed * _assFanVolume;
-        Debug.Log($"maxFanSpeed: {maxFanSpeed}, _fanSpeed: {_fanSpeed}, volume: {volume}");
         _assFanAudio.volume = volume;
         _piggoFan.Rotate(Vector3.up, _fanSpeed, Space.Self);
     }
