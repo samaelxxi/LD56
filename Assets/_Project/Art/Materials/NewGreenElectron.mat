@@ -7,31 +7,34 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RedTrail
-  m_Shader: {fileID: -6465566751694194690, guid: 3febaf9a3bc17004786a6078139040e8,
+  m_Name: NewGreenElectron
+  m_Shader: {fileID: -6465566751694194690, guid: 86603284ec27d304c9fbc7a96c8852d7,
     type: 3}
-  m_Parent: {fileID: 2100000, guid: 5da7dc8e042f64d48acc47be872927ae, type: 2}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_Parent: {fileID: 2100000, guid: 9c907fada3d803d4f9435fd2682eb0d8, type: 2}
+  m_ModifiedSerializedProperties: 2
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - _Intersection: 1
-    - _Something: 2.42
+    m_Floats: []
     m_Colors:
-    - _Color: {r: 2.1185472, g: 0.6695409, b: 0.8993833, a: 1}
+    - _Color: {r: 0.4470588, g: 0.64705884, b: 0.2313725, a: 1}
+    - _InterColor: {r: 2.7617173, g: 3.9986255, b: 1.4395052, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &6573736250342575761
+--- !u!114 &8338929821964457310
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
