@@ -67,8 +67,14 @@ public class QuatumPigController : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
             ScrollWheelDown?.Invoke();
 
+
+        #if UNITY_WEBGL
         if (Input.GetKeyDown(KeyCode.Tab))
             OnEscapePressed?.Invoke();
+        #elif UNITY_STANDALONE
+        if (Input.GetKeyDown(KeyCode.Escape))
+            OnEscapePressed?.Invoke();
+        #endif
 
         _rigidbody.angularVelocity = Vector3.zero;
     }

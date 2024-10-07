@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class Game : Singleton<Game>
 {
     public QuatumPig QuatumPig { get; private set; }
-    public PigUI PigUI { get; set; }
+    public PigUI PigUI { get => _pigUI; set => SetPigUI(value); }
     private int _oatiumCollected = 0;
     private float _startTime;
 
@@ -18,6 +18,8 @@ public class Game : Singleton<Game>
     private bool _gameIsRunning;
     private bool _isGameOver;
     private bool _isPaused;
+
+    PigUI _pigUI { get; set; }
 
     public bool IsPaused => _isPaused;
     public int TotalOatiumCollected => _totalOatiumCollected;
@@ -31,6 +33,14 @@ public class Game : Singleton<Game>
 
     private void ChangedActiveScene(Scene arg0, Scene arg1)
     {
+    }
+
+    private void SetPigUI(PigUI pigUI)
+    {
+        _pigUI = pigUI;
+        #if UNITY_STANDALONE
+        PigUI.HideEscHint();
+        #endif
     }
 
     void Start()
