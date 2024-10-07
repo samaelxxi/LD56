@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FailSpawnChance: 1
   TapkeSpawnChance: 0.5
-  <GameSessionTimeSeconds>k__BackingField: 10
+  <GameSessionTimeSeconds>k__BackingField: 300
   <MaxCollectedElectrons>k__BackingField: 3
   <OatCombination>k__BackingField:
     list:
