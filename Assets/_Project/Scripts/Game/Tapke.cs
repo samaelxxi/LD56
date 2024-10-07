@@ -304,6 +304,7 @@ public class Tapke : MonoBehaviour
             yield return null;
 
         _eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty = true;
+        _eatElectronSound.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
         _eatElectronSound.PlayOneShot(_eatElectronSound.clip);
 
         yield return new WaitForSeconds(1.5f);

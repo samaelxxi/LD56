@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using CarterGames.Assets.AudioManager;
 
 
 public class DialogWindow : MonoBehaviour
@@ -63,6 +64,7 @@ public class DialogWindow : MonoBehaviour
             _texts[dialogIdx].Bubble.transform.parent.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
 
+            AudioManager.PlayGroup("oink", pitch: 1f.WithVariation(0.1f));
             yield return StartCoroutine(ShowTextInternal(toShow));
             float waitTime = dialogIdx == _texts.Length - 1 ? 3 : 1;
             if (dialogIdx == 2 || dialogIdx == 0)

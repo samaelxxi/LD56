@@ -75,7 +75,7 @@ public class QuatumPig : MonoBehaviour
             Debug.Log("Electron launched");
             _preparedForShootElectron.transform.parent = null;
             _preparedForShootElectron = null;
-            AudioManager.Play("electronShot");
+            AudioManager.Play("electronShot", pitch: 1f.WithVariation(0.07f));
 
             _controller.AddSomeForce(-transform.forward * 20);
         }
@@ -220,7 +220,7 @@ public class QuatumPig : MonoBehaviour
             _pigOrbit.AddNewElectron(electron);
             electron.SetEmitting(false);
             OnElectronActivity(electron);
-            AudioManager.Play("electronPickUp");
+            AudioManager.Play("electronPickUp", pitch: 1f.WithVariation(0.1f));
             Debug.Log("Electron collected");
         }
     }
@@ -237,7 +237,5 @@ public class QuatumPig : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * 6);
     }
 }

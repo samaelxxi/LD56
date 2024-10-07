@@ -28,7 +28,7 @@ public class WorldCreator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            RebuildWorld();
+            // RebuildWorld();
         }
     }
 
@@ -61,8 +61,8 @@ public class WorldCreator : MonoBehaviour
     {
         _pigtoms = new GameObject("Pigtoms");
 
-        spaceMin = _worldCreatorSettings.WorldSize * -0.5f;
-        spaceMax = _worldCreatorSettings.WorldSize * 0.5f;
+        spaceMin = _worldCreatorSettings.WorldCenter - _worldCreatorSettings.WorldSize * 0.5f;
+        spaceMax = _worldCreatorSettings.WorldCenter + _worldCreatorSettings.WorldSize * 0.5f;
 
         int pigtomToMake = _worldCreatorSettings.PigtomsQuantity + _worldCreatorSettings.PigtomHoles;
 
@@ -219,8 +219,9 @@ public class WorldCreator : MonoBehaviour
             Random.Range(spaceMin.x, spaceMax.x),
             Random.Range(spaceMin.y, spaceMax.y),
             Random.Range(spaceMin.z, spaceMax.z)
-        ) + _worldCreatorSettings.WorldCenter;
+        );
     }
+
 
     void OnDrawGizmos()
     {

@@ -196,6 +196,19 @@ MonoBehaviour:
           option: 1
           tabPos: 1
         showDynamicTime: 0
+    - key: musicIGuess-5e1e6a13-b58a-432b-9748-d5345fe63282
+      value:
+        key: musicIGuess
+        id: musicIGuess-5e1e6a13-b58a-432b-9748-d5345fe63282
+        defaultKey: musicIGuess-5e1e6a13-b58a-432b-9748-d5345fe63282
+        value: {fileID: 8300000, guid: 48b5813bcca0a7440aa82615abbc773a, type: 3}
+        path: Assets/_Project/Audio/musicIGuess.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
   libraryReverseLookup:
     list:
     - key: atomTransform1
@@ -224,6 +237,8 @@ MonoBehaviour:
       value: electronShot-28d3dbe5-f5c5-4541-bbcf-ad5eb42f3417
     - key: oatSpawn
       value: oatSpawn-a847f706-dd58-45f4-ba88-913a28fc3e96
+    - key: musicIGuess
+      value: musicIGuess-5e1e6a13-b58a-432b-9748-d5345fe63282
   groups:
     list:
     - key: 58d2c867-55b9-43df-bf3a-d10eacb26a2d

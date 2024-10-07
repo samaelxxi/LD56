@@ -32,6 +32,7 @@ public class Game : Singleton<Game>
 
     void Start()
     {
+        AudioManager.Play("musicIGuess", volume: 0.5f);
 
         Debug.Log("Game.Start");
     }

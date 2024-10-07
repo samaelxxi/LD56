@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059e1f620668f1e40b2546374cfb0720, type: 3}
   m_Name: MainMenuWorldCreator
   m_EditorClassIdentifier: 
-  <WorldCenter>k__BackingField: {x: 0, y: 0, z: 70}
-  <WorldSize>k__BackingField: {x: 100, y: 80, z: 100}
+  <WorldCenter>k__BackingField: {x: 0, y: -25, z: 100}
+  <WorldSize>k__BackingField: {x: 200, y: 100, z: 100}
   <PigtomPrefab>k__BackingField: {fileID: 3734303571725091256, guid: 3f22b45637fb510498d72a25c867c916,
     type: 3}
   <PigtomsQuantity>k__BackingField: 15
