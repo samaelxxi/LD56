@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WorldCreatorSettings", menuName = "ScriptableObjects/WorldCreatorSettings", order = 1)]
 public class WorldCreatorSettings : ScriptableObject
 {
+    [field: SerializeField] public Vector3 WorldCenter { get; private set; }
     [field: SerializeField] public Vector3 WorldSize { get; private set; }
 
     [field: SerializeField] public Pigtom PigtomPrefab { get; private set; }

@@ -219,6 +219,12 @@ public class WorldCreator : MonoBehaviour
             Random.Range(spaceMin.x, spaceMax.x),
             Random.Range(spaceMin.y, spaceMax.y),
             Random.Range(spaceMin.z, spaceMax.z)
-        );
+        ) + _worldCreatorSettings.WorldCenter;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(_worldCreatorSettings.WorldCenter, _worldCreatorSettings.WorldSize);
     }
 }
