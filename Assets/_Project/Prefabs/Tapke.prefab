@@ -49,8 +49,9 @@ MonoBehaviour:
   _body: {fileID: 7174227969835747478}
   _relaxTime: 1
   _electronRelaxTime: 5
-  _pigtomChooseDistance: 20
+  _pigtomChooseDistance: 35
   _distanceFromPigtom: 2
+  _captureDistance: 3
 --- !u!114 &3093643963615453311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _rotationSpeed: 0.8
+  _rotationSpeed: 1.5
 --- !u!1 &7174227969835747478
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +92,7 @@ Transform:
   m_GameObject: {fileID: 7174227969835747478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.2, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -147,7 +148,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fb21633737bb1c84a884f2c565aea479,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.14999843
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fb21633737bb1c84a884f2c565aea479,
         type: 3}

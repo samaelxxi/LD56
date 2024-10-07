@@ -46,7 +46,8 @@ public class ElectronsTrigger : MonoBehaviour
 
         if (other.TryGetComponent(out Electron electron) 
                 && electron.Orbit != _ignoredOrbit &&
-                !_electrons.Contains(electron))
+                !_electrons.Contains(electron) &&
+                !electron.NotCatchable)
         {
             _electrons.Add(electron);
             OnElectronEnter?.Invoke(electron);

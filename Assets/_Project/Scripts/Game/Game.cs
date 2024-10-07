@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Game : Singleton<Game>
 {
-    public QuatumPig QuatumPig { get; set; }
+    public QuatumPig QuatumPig { get; private set; }
     private int _oatiumCollected = 0;
     private float _startTime;
 
@@ -33,14 +33,20 @@ public class Game : Singleton<Game>
 
     void Update()
     {
+
         float remainingTime = GameSettings.GameSessionTimeSeconds - (Time.time - _startTime);
-        remainingTime = Mathf.Max(0, GameSettings.GameSessionTimeSeconds - (Time.time - _startTime));
         ServiceLocator.Get<PigUI>().SetRemainingTime(remainingTime);
 
         if (remainingTime <= 0 && !_isGameOver)
         {
             GameOver();
         }
+    }
+
+    public void SetPig(QuatumPig pig)
+    {
+        Debug.Log($"Game.SetPig |{pig}|");
+        QuatumPig = pig;
     }
 
     public void StartNewGame()

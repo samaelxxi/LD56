@@ -16,5 +16,11 @@ public static class GameSettings
     public static int MaxCollectedElectrons => _gameSettings.MaxCollectedElectrons;
     public static SerializableDictionary<ElectronType, int> OatCombination => _gameSettings.OatCombination;
     public static Oatium OatiumPrefab => _gameSettings.OatiumPrefab;
+    public static Tapke TapkePrefab => _gameSettings.TapkePrefab;
+    public static List<GameObject> RandomStuffPrefabs => _gameSettings.RandomStuffPrefabs;
     public static float GameSessionTimeSeconds => _gameSettings.GameSessionTimeSeconds;
+
+
+    public static float FailSpawnChance => _gameSettings.FailSpawnChance;
+    public static float TapkeSpawnChance => _gameSettings.TapkeSpawnChance;
 }

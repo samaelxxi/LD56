@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class ElectronOrbit : MonoBehaviour
@@ -47,6 +48,11 @@ public class ElectronOrbit : MonoBehaviour
         }
     }
 
+
+    public void ShrinkOrbit(float time)
+    {
+        DOVirtual.Float(_orbitRadius, 0, time, (value) => _orbitRadius = value).SetEase(Ease.InCubic);
+    }
 
     public void AddElectron(Electron electron, int index, int maxElectrons)
     {

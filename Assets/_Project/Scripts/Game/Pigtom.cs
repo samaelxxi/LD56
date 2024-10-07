@@ -5,28 +5,32 @@ using System.Linq;
 using System;
 using Random = UnityEngine.Random;
 using DG.Tweening;
+using UnavinarML.General;
 
 
 [SelectionBase]
 public class Pigtom : MonoBehaviour
 {
-    [SerializeField] private int minElectronsNum = 1;
-    [SerializeField] private int maxElectronsNum = 10;
+    [SerializeField] public int minElectronsNum = 1;
+    [SerializeField] public int maxElectronsNum = 10;
     [SerializeField] private List<ElectronType> orbitElectrons;
-    [SerializeField] private float minOrbitRadius = 5f;
-    [SerializeField] private float maxOrbitRadius = 10f;
-    [SerializeField] private float minDistanceBetweenOrbits = 1f;
-    [SerializeField] private float minOrbitTime = 5f;
-    [SerializeField] private float maxOrbitTime = 15f;
+    [SerializeField] public float minOrbitRadius = 5f;
+    [SerializeField] public float maxOrbitRadius = 10f;
+    [SerializeField] public float minDistanceBetweenOrbits = 1f;
+    [SerializeField] public float minOrbitTime = 5f;
+    [SerializeField] public float maxOrbitTime = 15f;
     [SerializeField] private Transform nucleus;
-    [SerializeField] private float nucleusRadius = 10;
+    [SerializeField] public float nucleusRadius = 10;
 
 
     public float NucleusRadius => nucleusRadius;
     public bool StartedTransformation { get; private set; }
+    public int ElectronsNum => _orbits.Sum(e => e.ElectronsNum);
 
     private List<ElectronOrbit> _orbits = new();
     GameObject _orbitsObj;
+
+
 
     void Start()
     {
@@ -37,9 +41,9 @@ public class Pigtom : MonoBehaviour
         _orbitsObj = new GameObject("Orbits");
         _orbitsObj.transform.parent = transform;
 
-        minOrbitRadius = Mathf.Max(minOrbitRadius, (nucleusRadius + 1));
+        minOrbitRadius = Mathf.Max(minOrbitRadius, nucleusRadius + 1);
         if (maxOrbitRadius < minOrbitRadius)
-            maxOrbitRadius = minOrbitRadius + 3;
+            maxOrbitRadius = minOrbitRadius + minDistanceBetweenOrbits * 4;
         nucleus.localScale = Vector3.one * nucleusRadius * 2;
 
         int orbits = orbitElectrons.Count;
@@ -61,6 +65,11 @@ public class Pigtom : MonoBehaviour
 
     private void CreateNewOrbit(ElectronType type)
     {
+        int electronsNum = Random.Range(minElectronsNum, maxElectronsNum);
+        if (electronsNum == 0)
+            return;
+
+
         int k = 0;  // prevent infinite loop
         float orbitRadius = Random.Range(minOrbitRadius, maxOrbitRadius);
         while (_orbits.Any(e => Mathf.Abs(e.OrbitRadius - orbitRadius) < minDistanceBetweenOrbits) && k < 1000)
@@ -69,7 +78,6 @@ public class Pigtom : MonoBehaviour
             k++;
         }
         float orbitSpeed = Random.Range(minOrbitTime, maxOrbitTime);
-        int electronsNum = Random.Range(minElectronsNum, maxElectronsNum);
 
         float polarAngle = Random.Range(0, 360);
         float minPolarAngleDiff = 360.0f / (orbitElectrons.Count+1) * 0.8f;
@@ -84,7 +92,7 @@ public class Pigtom : MonoBehaviour
         var electronsObj = new GameObject(type.ToString() + " Orbit " + (_orbits.Count+1));
         electronsObj.transform.parent = _orbitsObj.transform;
         var orbit = electronsObj.AddComponent<ElectronOrbit>();
-        Debug.Log($"Creating orbit {type} with {electronsNum} electrons");
+        // Debug.Log($"Creating orbit {type} with {electronsNum} electrons");
         orbit.Setup(transform, orbitRadius, orbitSpeed, electronsNum, polarAngle, type, electronsObj.transform);
 
         orbit.OnElectronsNumChanged += OnElectronNumChanged;
@@ -175,24 +183,28 @@ public class Pigtom : MonoBehaviour
     {
         SuckElectronsAndShrinkAfter();
 
-        Vector3 position = transform.position;  // closure
-        StaticCoroutine.StartInSec(() => Instantiate(GameSettings.OatiumPrefab, 
-            position, Quaternion.identity), 6);
+        SpawnSomething(oatium: true);
     }
 
     private void SuckElectrons()
     {
         foreach (var orbit in _orbits)
         {
+            orbit.ShrinkOrbit(6);
+
             var electrons = orbit.Electrons.ToList();
             foreach (var electron in electrons)
             {
-                orbit.RemoveElectron(electron);
-                float moveTime = Random.Range(1f, 2f);
-                float delay = Random.Range(0f, 1f);
-                electron.transform.DOMove(transform.position, moveTime).SetEase(Ease.InOutSine)
-                    .SetDelay(delay)
-                    .OnComplete(() => electron.BeDestroyed());
+                electron.NotCatchable = true;
+                var e = electron;
+                this.InSeconds(3, () => e.SetEmitting(false));
+                // orbit.RemoveElectron(electron);
+                // float moveTime = Random.Range(1f, 2f);
+                // float delay = Random.Range(0f, 1f);
+                electron.TargetPosition = transform.position;
+                // electron.transform.DOMove(transform.position, moveTime).SetEase(Ease.InOutSine)
+                //     .SetDelay(delay)
+                //     .OnComplete(() => electron.BeDestroyed());
             }
         }
     }
@@ -202,11 +214,57 @@ public class Pigtom : MonoBehaviour
         SuckElectrons();
 
         transform.DOScale(Vector3.zero, 2).SetEase(Ease.InBack).SetDelay(4)
-            .OnComplete(() => Destroy(gameObject));
+            .OnComplete(() => Destroy(gameObject, 60));
     }
 
     public void BecomeVerbatium()
     {
-         SuckElectronsAndShrinkAfter();
+        SuckElectronsAndShrinkAfter();
+
+        if (Random.value < GameSettings.FailSpawnChance)
+        {
+            StartCoroutine(SpawnSomething(oatium: false));
+        }
     }
+
+    private void SpawnSeq(Transform something)
+    {
+        Vector3 targetScale = something.localScale;
+        something.localScale = Vector3.zero;
+        something.DOScale(targetScale, 3f).SetEase(Ease.OutElastic);
+    }
+
+    IEnumerator SpawnSomething(bool oatium)
+    {
+        yield return new WaitForSeconds(6);
+
+        Transform something;
+
+        if (oatium)
+        {
+            something = Instantiate(GameSettings.OatiumPrefab, transform.position, Quaternion.identity).transform;
+        }
+        else
+        {
+            if (Random.value < GameSettings.TapkeSpawnChance)
+            {
+                var tapke = Instantiate(GameSettings.TapkePrefab, transform.position, Quaternion.identity);
+                tapke.RelaxABit(5);
+                something = tapke.transform;
+            }
+            else
+            {
+                var randomStuff = GameSettings.RandomStuffPrefabs.RandomElement();
+                something = Instantiate(randomStuff, transform.position, Quaternion.identity).transform;
+            }
+        }
+
+        SpawnSeq(something);
+    }
+
+    void OnDestroy()
+    {
+        ServiceLocator.Get<PigtomsManager>().RemovePigtom(this);
+    }
+
 }

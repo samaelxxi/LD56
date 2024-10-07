@@ -48,6 +48,8 @@ public class PigUI : MonoBehaviour, Services.IRegistrable
 
     public void SetRemainingTime(float time)
     {
+        time = Mathf.Max(0, time);
+
         TimeSpan timeSpan = TimeSpan.FromSeconds(time);
         _remainingTimeText.text = timeSpan.ToString(@"mm\:ss");
         // _remainingTimeText.text = time.ToString("F2");

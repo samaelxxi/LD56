@@ -21,6 +21,7 @@ public class PigtomsManager : Services.MonoRegistrable
 
     public void RemovePigtom(Pigtom pigtom)
     {
-        _pigtoms.Remove(pigtom);
+        if (_pigtoms.Contains(pigtom))
+            _pigtoms.Remove(pigtom);
     }
 }

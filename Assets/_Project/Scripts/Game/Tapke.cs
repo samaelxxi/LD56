@@ -10,31 +10,37 @@ public class Tapke : MonoBehaviour
 {
     [SerializeField] private GameObject _body;
     [SerializeField] private float _relaxTime = 1f;
-    [SerializeField] private float _electronRelaxTime = 5;
+    [SerializeField] private float _electronRelaxTime = 10;
     [SerializeField] private float _pigtomChooseDistance = 20f;
     [SerializeField] private float _distanceFromPigtom = 3f;
+    [SerializeField] private float _captureDistance = 3f;
 
 
     Fsm _fsm = new();
     Fsm.State _idle;
     Fsm.State _movingToPigtom;
     Fsm.State _catchingElectron;
+    Fsm.State _eatingElectron;
 
-    QuatumPig _target;
+    QuatumPig _pig;
     TapkeController _controller;
+    Electron _capturedElectron;
 
 
-    private void Start()
+    private void Awake()
     {
-        _target = Game.Instance.QuatumPig;
-        _controller = GetComponent<TapkeController>();
-
         _idle = Idle;
         _movingToPigtom = MovingToPigtom;
         _catchingElectron = CatchingElectron;
+        _eatingElectron = EatingElectron;
+        _controller = GetComponent<TapkeController>();
+    }
+
+    private void Start()
+    {
+        _pig = Game.Instance.QuatumPig;
 
         RelaxABit(ateElectron: false);
-
         _body.transform.DOLocalMoveY(0.4f, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
@@ -73,14 +79,22 @@ public class Tapke : MonoBehaviour
         _fsm.TransitionTo(_idle);
     }
 
+    public void RelaxABit(float time)
+    {
+        _waitTime = time;
+        _fsm.TransitionTo(_idle);
+    }
+
     Pigtom _targetPigtom;
     Pigtom _intermediatePigtom;
     Vector3 _targetPosition;
     bool _goingToCorrectPigtom = false;
-    Tween _pigtomMoveTween;
     Vector3 debugControlPoint;
     Vector3 debugStartPoint;
     Vector3 debugHitPoint;
+    Pigtom _attachedPigtom;
+    float _checkPigtomsDistance;
+    Vector3 _bestCheckPigtom;
 
     
     void MovingToPigtom(Fsm fsm, Fsm.Step step, Fsm.State state)
@@ -94,17 +108,16 @@ public class Tapke : MonoBehaviour
             if (!_controller.IsMoving)
             {
                 if (_goingToCorrectPigtom)
-                    _fsm.TransitionTo(_catchingElectron);
-                else
                 {
-                    RelaxABit(ateElectron: false);
+                    _attachedPigtom = _targetPigtom;
+                    _fsm.TransitionTo(_catchingElectron);
                 }
+                else
+                    RelaxABit(ateElectron: false);
             }
-
         }
         else if (step == Fsm.Step.Exit)
         {
-            _pigtomMoveTween?.Kill();
             _targetPigtom = null;
         }
     }
@@ -154,8 +167,6 @@ public class Tapke : MonoBehaviour
                 debugStartPoint = transform.position;
                 debugControlPoint = control;
             }
-
-            _pigtomMoveTween.Play();
         }
         else
         {
@@ -163,58 +174,161 @@ public class Tapke : MonoBehaviour
         }
     }
 
-
     private Pigtom ChooseTargetPigtom()
     {
         List<Pigtom> pigtoms = new();
 
-        var allPigtoms = ServiceLocator.Get<PigtomsManager>().CoolPigtoms;
+        _pig = Game.Instance.QuatumPig;
+        var allPigtoms = ServiceLocator.Get<PigtomsManager>().CoolPigtoms.Where(p => p.ElectronsNum > 0);
         if (allPigtoms.Count() == 0)
         {
             return null;
         }
 
-        float minDistance = allPigtoms.Min(p => Vector3.Distance(p.transform.position, _target.transform.position));
+        float minDistance = allPigtoms.Min(p => Vector3.Distance(p.transform.position, _pig.transform.position));
+        _checkPigtomsDistance = minDistance + _pigtomChooseDistance;
+        _checkPigtomsDistance = Mathf.Min(_checkPigtomsDistance, Mathf.Max(80, minDistance+2));
+        _bestCheckPigtom = _pig.transform.position;
+        Debug.Log(_checkPigtomsDistance);
 
         foreach (var pigtom in allPigtoms)
-            if (Vector3.Distance(pigtom.transform.position, _target.transform.position) < minDistance + _pigtomChooseDistance)
+            if (Vector3.Distance(pigtom.transform.position, _pig.transform.position) < _checkPigtomsDistance)
                 pigtoms.Add(pigtom);
 
-        foreach (var pigtom in pigtoms)
-            Debug.Log(pigtom.name);
-        Debug.Log($"Pigtoms found: {pigtoms.Count}");
+        // foreach (var pigtom in pigtoms)
+        //     Debug.Log($"{pigtom.name} {Vector3.Distance(pigtom.transform.position, _pig.transform.position)} {minDistance}");
 
         // TODO add probabilistic selection(no)
-        // return null;
         return pigtoms.RandomElement();
     }
 
 
+    Collider[] _electrons = new Collider[1];
+    float _catchStartTime;
     private void CatchingElectron(Fsm fsm, Fsm.Step step, Fsm.State state)
     {
         if (step == Fsm.Step.Enter)
         {
-            RelaxABit(ateElectron: false);
+            _catchStartTime = Time.time;
+            if (_attachedPigtom.ElectronsNum == 0)
+            {
+                RelaxABit(ateElectron: false);
+                return;
+            }
+            _controller.StartMovingAroundPigtom(_attachedPigtom.transform.position, _attachedPigtom.NucleusRadius + _distanceFromPigtom);
         }
         else if (step == Fsm.Step.Update)
         {
-            StartCoroutine(CatchElectron());
+            if (Physics.OverlapSphereNonAlloc(transform.position, _captureDistance, _electrons, Globals.ElectronMask) > 0)
+            {
+                var electron = _electrons[0].GetComponent<Electron>();
+                if (electron != null && electron.NotCatchable == false)
+                {
+                    _capturedElectron = electron;
+                    electron.Orbit.RemoveElectron(electron);
+                    electron.NotCatchable = true;
+                    _fsm.TransitionTo(_eatingElectron);
+                }
+            }
+            else if (Time.time - _catchStartTime > 12)
+            {
+                RelaxABit(ateElectron: false);
+            }
         }
         else if (step == Fsm.Step.Exit)
         {
+            _controller.StopMovingAroundPigtom();
             Debug.Log("CatchingElectron Exit");
         }
     }
 
-    private IEnumerator CatchElectron()
+
+
+    void EatingElectron(Fsm fsm, Fsm.Step step, Fsm.State state)
     {
-        yield return new WaitForSeconds(_relaxTime);
-        // throw new NotImplementedException();
+        if (step == Fsm.Step.Enter)
+        {
+            StartCoroutine(EatElectron());
+        }
+        else if (step == Fsm.Step.Update)
+        {
+            Vector3 electronPos;
+            if (_eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty)
+                electronPos = _body.transform.position;
+            else
+                electronPos = _body.transform.position + transform.up * 3;
+
+            _capturedElectron.TargetPosition = electronPos;
+        }
+        else if (step == Fsm.Step.Exit)
+        {
+            _capturedElectron = null;
+        }
+    }
+
+
+    bool _eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty = false;
+    private IEnumerator EatElectron()
+    {
+        yield return new WaitForSeconds(1.5f);
+        int k = 0;
+        Collider[] pigtoms = new Collider[1];
+        RaycastHit[] hits = new RaycastHit[1];
+
+        Vector3 checkEatPos = Vector3.zero;
+        Vector3 pigtomToTapkeDir = (transform.position - _attachedPigtom.transform.position).normalized;
+        Vector3 checkStartPos = _attachedPigtom.transform.position + pigtomToTapkeDir * (_attachedPigtom.NucleusRadius + 3.5f);
+
+        LayerMask mask = Globals.PigtomMask | Globals.StuffMask;
+
+        while (true && k < 100)
+        {
+            Vector3 randomDir = UnityEngine.Random.insideUnitCircle.normalized;
+            float distance = UnityEngine.Random.Range(10, 30);
+            checkEatPos = transform.position + randomDir * distance;
+            Ray ray = new(checkStartPos, checkEatPos - transform.position);
+    
+            if (Physics.OverlapSphereNonAlloc(checkEatPos, 4, pigtoms, mask) == 0 &&
+                Physics.SphereCastNonAlloc(ray, 2.5f, hits, distance, mask) == 0)
+            {
+                _controller.SetStraightMovementTarget(checkEatPos);
+                break;
+            }
+            k++;
+        }
+
+        Debug.Log($"Eating electron {k} {transform.position} {checkEatPos}");
+
+        while (_controller.IsMoving)
+            yield return null;
+
+        _eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty = true;
+
+        yield return new WaitForSeconds(1.5f);
+        _capturedElectron.BeDestroyed();
+        yield return new WaitForSeconds(1);
+        _eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty = false;
+        RelaxABit(ateElectron: true);
     }
 
     private void OnDrawGizmos()
     {
-        if (_targetPigtom != null)
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, _captureDistance);
+
+        if (_bestCheckPigtom != null)
+        {
+            Gizmos.color = Color.black;
+            // Gizmos.DrawWireSphere(_bestCheckPigtom, _checkPigtomsDistance);
+        }
+
+        if (_capturedElectron != null)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(_capturedElectron.TargetPosition, 1f);
+        }
+
+        if (_targetPigtom != null && _intermediatePigtom != null)
         {
             Gizmos.color = Color.red;
             // Gizmos.DrawWireSphere(transform.position, 1f);

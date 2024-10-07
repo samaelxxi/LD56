@@ -45,7 +45,8 @@ public class QuatumPig : MonoBehaviour
 
         _electronsTrigger.SetIgnoredOrbit(_pigOrbit);
 
-        Game.Instance.QuatumPig = this;
+        Debug.Log("Pig created");
+        Game.Instance.SetPig(this);
     }
 
     void Start()

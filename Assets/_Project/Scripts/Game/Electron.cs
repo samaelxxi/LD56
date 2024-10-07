@@ -15,6 +15,7 @@ public class Electron : MonoBehaviour
 
     public bool IsLaunched => _isLaunched;
     public Vector3 TargetPosition { get; set; }
+    public bool NotCatchable { get; set; }
     [SerializeField] public ElectronOrbit Orbit { get => _orbit; set => SetOrbit(value); }
     public ElectronType Type => _type;
 
@@ -122,6 +123,11 @@ public class Electron : MonoBehaviour
         }
     }
 
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
+    }
+
 
     Sequence trailTimeTween;
 
@@ -131,6 +137,7 @@ public class Electron : MonoBehaviour
         _isLaunched = true;
         _launchTime = Time.time;
         _trailRenderer.time = 2;
+        _speed *= 2;
     }
 
     public void BeDestroyed()
