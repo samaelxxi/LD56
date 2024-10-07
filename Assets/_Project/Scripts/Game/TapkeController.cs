@@ -120,6 +120,7 @@ public class TapkeController : MonoBehaviour
 
         float angularDisplacement = linearDistance / radius;
         float deltaLongitude = angularDisplacement * Mathf.Rad2Deg;
+        deltaLongitude = deltaLongitude.WithVariation(deltaLongitude * 0.1f);
         longitude = (longitude + deltaLongitude) % 360f;
         latitude = (latitude + deltaLongitude) % 360f;
         
@@ -159,12 +160,15 @@ public class TapkeController : MonoBehaviour
 
         // Compute initial latitude and longitude based on the current position
         Vector3 relativePosition = transform.position - center;
-        latitude = Mathf.Asin(relativePosition.y / radius) * Mathf.Rad2Deg;
+        
+        var dist = relativePosition.magnitude;
+        float sinLat = Mathf.Clamp(relativePosition.y / dist, -1f, 1f);
+        latitude = Mathf.Asin(sinLat) * Mathf.Rad2Deg;
         longitude = Mathf.Atan2(relativePosition.z, relativePosition.x) * Mathf.Rad2Deg;
 
         if (float.IsNaN(latitude) || float.IsNaN(longitude))
         {
-            Debug.Log(center);
+            Debug.Log($"{relativePosition.y} / {dist} = {relativePosition.y / radius} : {latitude}");
             Debug.LogError("Initial latitude or longitude is NaN");
             latitude = 0;
             Debug.Log($"Relative Position: {relativePosition} | Radius: {radius}");

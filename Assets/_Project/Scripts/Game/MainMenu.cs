@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -19,6 +20,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        AudioManager.Play("click");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Game");
     }
 }

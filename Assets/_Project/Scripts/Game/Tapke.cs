@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CarterGames.Assets.AudioManager;
 using DG.Tweening;
 using UnavinarML.General;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Tapke : MonoBehaviour
     [SerializeField] private float _pigtomChooseDistance = 20f;
     [SerializeField] private float _distanceFromPigtom = 3f;
     [SerializeField] private float _captureDistance = 3f;
+    [SerializeField] private AudioSource _eatElectronSound;
 
 
     Fsm _fsm = new();
@@ -107,7 +109,7 @@ public class Tapke : MonoBehaviour
         {
             if (!_controller.IsMoving)
             {
-                if (_goingToCorrectPigtom)
+                if (_goingToCorrectPigtom && _targetPigtom != null && _targetPigtom.ElectronsNum > 0)
                 {
                     _attachedPigtom = _targetPigtom;
                     _fsm.TransitionTo(_catchingElectron);
@@ -210,15 +212,16 @@ public class Tapke : MonoBehaviour
         if (step == Fsm.Step.Enter)
         {
             _catchStartTime = Time.time;
-            if (_attachedPigtom.ElectronsNum == 0)
-            {
-                RelaxABit(ateElectron: false);
-                return;
-            }
             _controller.StartMovingAroundPigtom(_attachedPigtom.transform.position, _attachedPigtom.NucleusRadius + _distanceFromPigtom);
         }
         else if (step == Fsm.Step.Update)
         {
+            if (_attachedPigtom == null || Time.time - _catchStartTime > 12)
+            {
+                RelaxABit(ateElectron: false);
+                return;
+            }
+
             if (Physics.OverlapSphereNonAlloc(transform.position, _captureDistance, _electrons, Globals.ElectronMask) > 0)
             {
                 var electron = _electrons[0].GetComponent<Electron>();
@@ -230,10 +233,6 @@ public class Tapke : MonoBehaviour
                     _fsm.TransitionTo(_eatingElectron);
                 }
             }
-            else if (Time.time - _catchStartTime > 12)
-            {
-                RelaxABit(ateElectron: false);
-            }
         }
         else if (step == Fsm.Step.Exit)
         {
@@ -243,11 +242,12 @@ public class Tapke : MonoBehaviour
 
 
 
+    Coroutine _eatElectronCoroutine;
     void EatingElectron(Fsm fsm, Fsm.Step step, Fsm.State state)
     {
         if (step == Fsm.Step.Enter)
         {
-            StartCoroutine(EatElectron());
+            _eatElectronCoroutine = StartCoroutine(EatElectron());
         }
         else if (step == Fsm.Step.Update)
         {
@@ -269,14 +269,16 @@ public class Tapke : MonoBehaviour
     bool _eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty = false;
     private IEnumerator EatElectron()
     {
+        Vector3 _pigtomPos = _attachedPigtom.transform.position;
+        float radius = _attachedPigtom.NucleusRadius + 3.5f;
         yield return new WaitForSeconds(1.5f);
         int k = 0;
         Collider[] pigtoms = new Collider[1];
         RaycastHit[] hits = new RaycastHit[1];
 
         Vector3 checkEatPos = Vector3.zero;
-        Vector3 pigtomToTapkeDir = (transform.position - _attachedPigtom.transform.position).normalized;
-        Vector3 checkStartPos = _attachedPigtom.transform.position + pigtomToTapkeDir * (_attachedPigtom.NucleusRadius + 3.5f);
+        Vector3 pigtomToTapkeDir = (transform.position - _pigtomPos).normalized;
+        Vector3 checkStartPos = _pigtomPos + pigtomToTapkeDir * radius;
 
         LayerMask mask = Globals.PigtomMask | Globals.StuffMask;
 
@@ -302,6 +304,7 @@ public class Tapke : MonoBehaviour
             yield return null;
 
         _eatingElectronLikeRightNowGodDamnItLetsGoILoveThisStuffUhhhTasty = true;
+        _eatElectronSound.PlayOneShot(_eatElectronSound.clip);
 
         yield return new WaitForSeconds(1.5f);
         _capturedElectron.BeDestroyed();

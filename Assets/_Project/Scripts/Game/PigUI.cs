@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.UI;
+using CarterGames.Assets.AudioManager;
 
 
 public class PigUI : MonoBehaviour
@@ -82,7 +83,6 @@ public class PigUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
         _controls.SetActive(false);
-
     }
 
     public void ShowGameOver()
@@ -94,22 +94,26 @@ public class PigUI : MonoBehaviour
 
     public void OnContinueClicked()
     {
+        AudioManager.Play("click");
         Game.Instance.ResumeGame();
     }
 
     public void OnGoToMenuClicked()
     {
+        AudioManager.Play("click");
         Game.Instance.GoToMainMenu();
     }
 
     public void ShowControls()
     {
+        AudioManager.Play("click");
         _controls.SetActive(true);
         _pauseMenu.SetActive(false);
     }
 
     public void HideControls()
     {
+        AudioManager.Play("click");
         _controls.SetActive(false);
         _pauseMenu.SetActive(true);
     }

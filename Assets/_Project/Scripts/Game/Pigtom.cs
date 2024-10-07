@@ -22,6 +22,12 @@ public class Pigtom : MonoBehaviour
     [SerializeField] private Transform nucleus;
     [SerializeField] public float nucleusRadius = 10;
 
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _oatiumSpawnSound;
+    [SerializeField] private AudioClip _tapkeSpawnSound;
+    [SerializeField] private AudioClip _transformSound;
+    [SerializeField] private AudioClip _transformSound2;
+
 
     public float NucleusRadius => nucleusRadius;
     public bool StartedTransformation { get; private set; }
@@ -206,6 +212,8 @@ public class Pigtom : MonoBehaviour
     private void SuckElectronsAndShrinkAfter()
     {
         SuckElectrons();
+        _audioSource.PlayOneShot(_transformSound);
+        this.InSeconds(4, () => _audioSource.PlayOneShot(_transformSound2));
 
         transform.DOScale(Vector3.zero, 2).SetEase(Ease.InBack).SetDelay(4);
             // .OnComplete(() => Destroy(gameObject, 60));
@@ -250,6 +258,7 @@ public class Pigtom : MonoBehaviour
         if (oatium)
         {
             something = Instantiate(GameSettings.OatiumPrefab, transform.position, Quaternion.identity).transform;
+            _audioSource.PlayOneShot(_oatiumSpawnSound);
             Debug.Log("Oatium spawned");
         }
         else
@@ -258,12 +267,20 @@ public class Pigtom : MonoBehaviour
             {
                 var tapke = Instantiate(GameSettings.TapkePrefab, transform.position, Quaternion.identity);
                 tapke.RelaxABit(5);
+                _audioSource.PlayOneShot(_tapkeSpawnSound);
                 something = tapke.transform;
             }
             else
             {
                 var randomStuff = GameSettings.RandomStuffPrefabs.RandomElement();
                 something = Instantiate(randomStuff, transform.position, Quaternion.identity).transform;
+                var rb = something.GetComponent<Rigidbody>();
+                float force = rb.mass * 10;
+                force = force.WithVariation(force * 0.5f);
+                float torque = rb.mass * 5;
+                torque = torque.WithVariation(torque * 0.5f);
+                rb.AddForce(UnityEngine.Random.insideUnitSphere * force, ForceMode.Impulse);
+                rb.AddTorque(UnityEngine.Random.insideUnitSphere * torque, ForceMode.Impulse);
             }
         }
 

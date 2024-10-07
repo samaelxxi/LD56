@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using CarterGames.Assets.AudioManager;
 
 
 [SelectionBase]
@@ -29,7 +30,7 @@ public class QuatumPig : MonoBehaviour
         _electronsTrigger.OnElectronEnter += OnElectronActivity;
         _electronsTrigger.OnElectronExit += OnElectronActivity;
 
-        _controller.OnEatElectron += EatElectronClicked;
+        _controller.OnEatElectron += TransformAtomClicked;
         _controller.OnCollectElectron += CollectElectronClicked;
         _controller.OnShootElectron += ShootElectron;
         _controller.ScrollWheelUp += () => OnChangeElectron(true);
@@ -74,6 +75,7 @@ public class QuatumPig : MonoBehaviour
             Debug.Log("Electron launched");
             _preparedForShootElectron.transform.parent = null;
             _preparedForShootElectron = null;
+            AudioManager.Play("electronShot");
 
             _controller.AddSomeForce(-transform.forward * 20);
         }
@@ -95,9 +97,15 @@ public class QuatumPig : MonoBehaviour
         Electron nextElectron;
 
         if (next)
+        {
             nextElectron = _pigOrbit.GetElectron(0);
+            AudioManager.Play("electronUp");
+        }
         else
+        {
             nextElectron = _pigOrbit.GetElectron(_pigOrbit.ElectronsNum - 1);
+            AudioManager.Play("electronDown");
+        }
         
         _pigOrbit.RemoveElectron(nextElectron);
         _pigOrbit.AddNewElectron(_preparedForShootElectron);
@@ -169,9 +177,10 @@ public class QuatumPig : MonoBehaviour
 
     private void OnElectronActivity(Electron electron)
     {
+        // deprecated
     }
 
-    private void EatElectronClicked()
+    private void TransformAtomClicked()
     {
         if (pigtomToTransform != null)
         {
@@ -186,6 +195,21 @@ public class QuatumPig : MonoBehaviour
         // }
     }
 
+    float _lastTimeOinked = 0;
+    void OnCollisionEnter(Collision other)
+    {
+        Debug.Log(other.impulse.magnitude);
+        if (Time.time - _lastTimeOinked >1 && other.impulse.magnitude > 7)
+            Oink();
+        
+    }
+
+    void Oink()
+    {
+        AudioManager.PlayGroup("oink", 1, 1f.WithVariation(0.1f));
+        _lastTimeOinked = Time.time;
+    }
+
     private void CollectElectronClicked()
     {
         if (CanCollectElectron())
@@ -196,6 +220,7 @@ public class QuatumPig : MonoBehaviour
             _pigOrbit.AddNewElectron(electron);
             electron.SetEmitting(false);
             OnElectronActivity(electron);
+            AudioManager.Play("electronPickUp");
             Debug.Log("Electron collected");
         }
     }

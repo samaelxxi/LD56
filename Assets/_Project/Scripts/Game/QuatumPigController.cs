@@ -81,8 +81,8 @@ public class QuatumPigController : MonoBehaviour
         // Handle movement
         Vector3 forward = transform.forward;
         Vector3 right = transform.right;
-        _horizontalInput *= 0.5f;
-        _verticalInput *= 0.5f;
+        _horizontalInput *= 0.7f;
+        _verticalInput *= 0.7f;
         _currentForwardSpeed = Mathf.MoveTowards(_currentForwardSpeed, _forwardInput * maxSpeed, acceleration * Time.fixedDeltaTime);
         _currentStrafeSpeed = Mathf.MoveTowards(_currentStrafeSpeed, _horizontalInput * maxSpeed, acceleration * Time.fixedDeltaTime);
         _currentVerticalSpeed = Mathf.MoveTowards(_currentVerticalSpeed, _verticalInput * maxSpeed, acceleration * Time.fixedDeltaTime);

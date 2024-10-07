@@ -13,13 +13,231 @@ MonoBehaviour:
   m_Name: Library
   m_EditorClassIdentifier: 
   library:
-    list: []
+    list:
+    - key: atomTransform1-8193c03f-a2ca-48c2-bf9e-51be6d6f5911
+      value:
+        key: atomTransform1
+        id: atomTransform1-8193c03f-a2ca-48c2-bf9e-51be6d6f5911
+        defaultKey: atomTransform1-8193c03f-a2ca-48c2-bf9e-51be6d6f5911
+        value: {fileID: 8300000, guid: d18f5b488c3dd0a45b263d788723fc4b, type: 3}
+        path: Assets/_Project/Audio/atomTransform1.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: click-ddaadd71-d84d-4c49-b2f7-476d9fb3beec
+      value:
+        key: click
+        id: click-ddaadd71-d84d-4c49-b2f7-476d9fb3beec
+        defaultKey: click-ddaadd71-d84d-4c49-b2f7-476d9fb3beec
+        value: {fileID: 8300000, guid: ff6991d14ce8bf6498197265e017ffc6, type: 3}
+        path: Assets/_Project/Audio/click.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: electronDown-939a26ee-e775-446b-b808-e32d3920361f
+      value:
+        key: electronDown
+        id: electronDown-939a26ee-e775-446b-b808-e32d3920361f
+        defaultKey: electronDown-939a26ee-e775-446b-b808-e32d3920361f
+        value: {fileID: 8300000, guid: 61cb0af7663b58e4f8c6ff6e7651a94b, type: 3}
+        path: Assets/_Project/Audio/electronDown.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: electronPickUp-4d562eaf-e533-4ac8-8436-87aee21356ca
+      value:
+        key: electronPickUp
+        id: electronPickUp-4d562eaf-e533-4ac8-8436-87aee21356ca
+        defaultKey: electronPickUp-4d562eaf-e533-4ac8-8436-87aee21356ca
+        value: {fileID: 8300000, guid: 19031c084c1e80d4d90d5973fa98c9b7, type: 3}
+        path: Assets/_Project/Audio/electronPickUp.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: electronUp-b5b80a1f-ef2e-4311-be35-aaf88eb0d2e9
+      value:
+        key: electronUp
+        id: electronUp-b5b80a1f-ef2e-4311-be35-aaf88eb0d2e9
+        defaultKey: electronUp-b5b80a1f-ef2e-4311-be35-aaf88eb0d2e9
+        value: {fileID: 8300000, guid: 923c238191ad8c74ebb868ae8549fde0, type: 3}
+        path: Assets/_Project/Audio/electronUp.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: tapkeSpawns-9d4245b0-05c7-4204-b6ff-ae37a0960a7d
+      value:
+        key: tapkeSpawns
+        id: tapkeSpawns-9d4245b0-05c7-4204-b6ff-ae37a0960a7d
+        defaultKey: tapkeSpawns-9d4245b0-05c7-4204-b6ff-ae37a0960a7d
+        value: {fileID: 8300000, guid: 86864875bf5e5c741a86298a14e8ebad, type: 3}
+        path: Assets/_Project/Audio/tapkeSpawns.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: ateOat-5055b7d6-e074-490b-8adc-51829f0f76d9
+      value:
+        key: ateOat
+        id: ateOat-5055b7d6-e074-490b-8adc-51829f0f76d9
+        defaultKey: ateOat-5055b7d6-e074-490b-8adc-51829f0f76d9
+        value: {fileID: 8300000, guid: 6e5663e8d2846b2418b54e3a13344ec1, type: 3}
+        path: Assets/_Project/Audio/ateOat.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: atomTransform0-930ec479-2f5c-456a-b839-8e78f3925fa7
+      value:
+        key: atomTransform0
+        id: atomTransform0-930ec479-2f5c-456a-b839-8e78f3925fa7
+        defaultKey: atomTransform0-930ec479-2f5c-456a-b839-8e78f3925fa7
+        value: {fileID: 8300000, guid: 4b72f0861bd090d40be16d5d45b53074, type: 3}
+        path: Assets/_Project/Audio/atomTransform0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: oink1-6afec41e-0d49-4657-ac58-cf883904cc5d
+      value:
+        key: oink1
+        id: oink1-6afec41e-0d49-4657-ac58-cf883904cc5d
+        defaultKey: oink1-6afec41e-0d49-4657-ac58-cf883904cc5d
+        value: {fileID: 8300000, guid: 1380bab85ff9a13488701a8b32878333, type: 3}
+        path: Assets/_Project/Audio/oink1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 1
+    - key: oink2-ad69ca3a-9798-42c6-9d87-d115a83bca6b
+      value:
+        key: oink2
+        id: oink2-ad69ca3a-9798-42c6-9d87-d115a83bca6b
+        defaultKey: oink2-ad69ca3a-9798-42c6-9d87-d115a83bca6b
+        value: {fileID: 8300000, guid: 9b95c9a1f91c1b8498bb930c2600dd1c, type: 3}
+        path: Assets/_Project/Audio/oink2.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: oink3-a2ba782d-97ff-4aa4-9aaa-6fd14a46c552
+      value:
+        key: oink3
+        id: oink3-a2ba782d-97ff-4aa4-9aaa-6fd14a46c552
+        defaultKey: oink3-a2ba782d-97ff-4aa4-9aaa-6fd14a46c552
+        value: {fileID: 8300000, guid: 56d4461a032d2ff40bdfadfc9523237e, type: 3}
+        path: Assets/_Project/Audio/oink3.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: electronShot-28d3dbe5-f5c5-4541-bbcf-ad5eb42f3417
+      value:
+        key: electronShot
+        id: electronShot-28d3dbe5-f5c5-4541-bbcf-ad5eb42f3417
+        defaultKey: electronShot-28d3dbe5-f5c5-4541-bbcf-ad5eb42f3417
+        value: {fileID: 8300000, guid: c98e3cee5044b06459992938c9705d97, type: 3}
+        path: Assets/_Project/Audio/electronShot.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: oatSpawn-a847f706-dd58-45f4-ba88-913a28fc3e96
+      value:
+        key: oatSpawn
+        id: oatSpawn-a847f706-dd58-45f4-ba88-913a28fc3e96
+        defaultKey: oatSpawn-a847f706-dd58-45f4-ba88-913a28fc3e96
+        value: {fileID: 8300000, guid: 9a69c35d4eb9865449cabc4bfb23ae9d, type: 3}
+        path: Assets/_Project/Audio/oatSpawn.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
+    - key: tapkeEatsElectron-31783ea6-0249-4b56-a4a1-2c26a5e12ab7
+      value:
+        key: tapkeEatsElectron
+        id: tapkeEatsElectron-31783ea6-0249-4b56-a4a1-2c26a5e12ab7
+        defaultKey: tapkeEatsElectron-31783ea6-0249-4b56-a4a1-2c26a5e12ab7
+        value: {fileID: 8300000, guid: b52fecdc625f2c74786be6b04d875970, type: 3}
+        path: Assets/_Project/Audio/tapkeEatsElectron.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        showDynamicTime: 0
   libraryReverseLookup:
-    list: []
+    list:
+    - key: atomTransform1
+      value: atomTransform1-8193c03f-a2ca-48c2-bf9e-51be6d6f5911
+    - key: click
+      value: click-ddaadd71-d84d-4c49-b2f7-476d9fb3beec
+    - key: electronDown
+      value: electronDown-939a26ee-e775-446b-b808-e32d3920361f
+    - key: electronPickUp
+      value: electronPickUp-4d562eaf-e533-4ac8-8436-87aee21356ca
+    - key: electronUp
+      value: electronUp-b5b80a1f-ef2e-4311-be35-aaf88eb0d2e9
+    - key: tapkeSpawns
+      value: tapkeSpawns-9d4245b0-05c7-4204-b6ff-ae37a0960a7d
+    - key: ateOat
+      value: ateOat-5055b7d6-e074-490b-8adc-51829f0f76d9
+    - key: atomTransform0
+      value: atomTransform0-930ec479-2f5c-456a-b839-8e78f3925fa7
+    - key: oink1
+      value: oink1-6afec41e-0d49-4657-ac58-cf883904cc5d
+    - key: oink2
+      value: oink2-ad69ca3a-9798-42c6-9d87-d115a83bca6b
+    - key: oink3
+      value: oink3-a2ba782d-97ff-4aa4-9aaa-6fd14a46c552
+    - key: electronShot
+      value: electronShot-28d3dbe5-f5c5-4541-bbcf-ad5eb42f3417
+    - key: oatSpawn
+      value: oatSpawn-a847f706-dd58-45f4-ba88-913a28fc3e96
   groups:
-    list: []
+    list:
+    - key: 58d2c867-55b9-43df-bf3a-d10eacb26a2d
+      value:
+        groupName: oink
+        groupPlayMode: 0
+        clipNames:
+        - oink1-6afec41e-0d49-4657-ac58-cf883904cc5d
+        - oink2-ad69ca3a-9798-42c6-9d87-d115a83bca6b
+        - oink3-a2ba782d-97ff-4aa4-9aaa-6fd14a46c552
   groupsReverseLookup:
-    list: []
+    list:
+    - key: oink
+      value: 58d2c867-55b9-43df-bf3a-d10eacb26a2d
   mixers:
     list: []
   mixersReverseLookup:

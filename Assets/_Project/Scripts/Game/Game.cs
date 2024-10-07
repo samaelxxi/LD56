@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CarterGames.Assets.AudioManager;
 using DesignPatterns.Singleton;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -82,7 +83,7 @@ public class Game : Singleton<Game>
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadSceneAsync("MainMenu");
         Time.timeScale = 1;
         _isGameOver = false;
         _isPaused = false;
@@ -111,6 +112,7 @@ public class Game : Singleton<Game>
     public void CollectOatium()
     {
         _oatiumCollected++;
+        AudioManager.Play("ateOat", volume: 0.5f);
         Game.Instance.PigUI.SetOatiumNumber(_oatiumCollected);
     }
 }
