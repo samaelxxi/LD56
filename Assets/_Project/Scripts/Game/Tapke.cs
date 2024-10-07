@@ -189,7 +189,7 @@ public class Tapke : MonoBehaviour
         _checkPigtomsDistance = minDistance + _pigtomChooseDistance;
         _checkPigtomsDistance = Mathf.Min(_checkPigtomsDistance, Mathf.Max(80, minDistance+2));
         _bestCheckPigtom = _pig.transform.position;
-        Debug.Log(_checkPigtomsDistance);
+        // Debug.Log(_checkPigtomsDistance);
 
         foreach (var pigtom in allPigtoms)
             if (Vector3.Distance(pigtom.transform.position, _pig.transform.position) < _checkPigtomsDistance)
@@ -238,7 +238,6 @@ public class Tapke : MonoBehaviour
         else if (step == Fsm.Step.Exit)
         {
             _controller.StopMovingAroundPigtom();
-            Debug.Log("CatchingElectron Exit");
         }
     }
 
@@ -297,7 +296,7 @@ public class Tapke : MonoBehaviour
             k++;
         }
 
-        Debug.Log($"Eating electron {k} {transform.position} {checkEatPos}");
+        // Debug.Log($"Eating electron {k} {transform.position} {checkEatPos}");
 
         while (_controller.IsMoving)
             yield return null;

@@ -52,8 +52,8 @@ public class Electron : MonoBehaviour
 
             Sequence sequence = DOTween.Sequence();
 
-            var tween1 = DOTween.To(() => _trailRenderer.time, x => _trailRenderer.time = x, 1, 1.5f);
-                            // .OnComplete(() => _trailRenderer.emitting = false);
+            var tween1 = DOTween.To(() => _trailRenderer.time, x => _trailRenderer.time = x, 0, 1.5f)
+                            .OnComplete(() => _trailRenderer.emitting = false);
             // var tween2 = DOTween.To(() => _trailRenderer.widthMultiplier, x => _trailRenderer.widthMultiplier = x, 0, 0.5f);
 
             sequence.Append(tween1);
@@ -69,6 +69,8 @@ public class Electron : MonoBehaviour
             Sequence sequence = DOTween.Sequence();
 
             var tween1 = DOTween.To(() => _trailRenderer.time, x => _trailRenderer.time = x, 2, 1);
+
+
             _trailRenderer.widthMultiplier = transform.localScale.x + 0.1f;
 
             sequence.Append(tween1);

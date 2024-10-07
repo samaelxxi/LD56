@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0ce82196466054ba70df964a5c23f0, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  FailSpawnChance: 0.5
+  FailSpawnChance: 1
   TapkeSpawnChance: 0.5
   <GameSessionTimeSeconds>k__BackingField: 300
   <MaxCollectedElectrons>k__BackingField: 3

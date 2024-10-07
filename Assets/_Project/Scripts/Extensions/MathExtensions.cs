@@ -122,9 +122,6 @@ public static class MathExtensions
         // Sort the angles
         angles.Sort();
 
-        foreach (var a in angles)
-            Debug.Log(a);
-
         // Find the largest angular gap
         float largestGap = 0f;
         float bestAngle = 0f;

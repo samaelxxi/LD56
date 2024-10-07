@@ -123,6 +123,7 @@ public class Pigtom : MonoBehaviour
             {
                 return false;
             }
+            Debug.Log($"{electron.Key} {electron.Value}");
         }
 
         return true;
@@ -179,13 +180,6 @@ public class Pigtom : MonoBehaviour
         }
     }
 
-    public void BecomeOautium()
-    {
-        SuckElectronsAndShrinkAfter();
-
-        SpawnSomething(oatium: true);
-    }
-
     private void SuckElectrons()
     {
         foreach (var orbit in _orbits)
@@ -197,7 +191,7 @@ public class Pigtom : MonoBehaviour
             {
                 electron.NotCatchable = true;
                 var e = electron;
-                this.InSeconds(3, () => e.SetEmitting(false));
+                this.InSeconds(6, () => e.SetEmitting(false));
                 // orbit.RemoveElectron(electron);
                 // float moveTime = Random.Range(1f, 2f);
                 // float delay = Random.Range(0f, 1f);
@@ -213,12 +207,24 @@ public class Pigtom : MonoBehaviour
     {
         SuckElectrons();
 
-        transform.DOScale(Vector3.zero, 2).SetEase(Ease.InBack).SetDelay(4)
-            .OnComplete(() => Destroy(gameObject, 60));
+        transform.DOScale(Vector3.zero, 2).SetEase(Ease.InBack).SetDelay(4);
+            // .OnComplete(() => Destroy(gameObject, 60));
+
+        this.InSeconds(10, () => Destroy(this));
+    }
+
+    public void BecomeOautium()
+    {
+        Debug.Log("Becoming Oatium");
+        SuckElectronsAndShrinkAfter();
+
+
+        StartCoroutine(SpawnSomething(oatium: true));
     }
 
     public void BecomeVerbatium()
     {
+        Debug.Log("Becoming Verbatium");
         SuckElectronsAndShrinkAfter();
 
         if (Random.value < GameSettings.FailSpawnChance)
@@ -236,6 +242,7 @@ public class Pigtom : MonoBehaviour
 
     IEnumerator SpawnSomething(bool oatium)
     {
+        Debug.Log("Spawning something " + (oatium ? "Oatium" : "Random"));
         yield return new WaitForSeconds(6);
 
         Transform something;
@@ -243,6 +250,7 @@ public class Pigtom : MonoBehaviour
         if (oatium)
         {
             something = Instantiate(GameSettings.OatiumPrefab, transform.position, Quaternion.identity).transform;
+            Debug.Log("Oatium spawned");
         }
         else
         {

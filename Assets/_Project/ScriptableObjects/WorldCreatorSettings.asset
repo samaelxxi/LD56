@@ -20,11 +20,12 @@ MonoBehaviour:
   <DesiredAverageDistance>k__BackingField: 10
   <DesiredAverageDistanceDeviation>k__BackingField: 5
   <PigtomRadius>k__BackingField: 7
-  <PigtomRadiusDeviation>k__BackingField: 2.5
+  <PigtomRadiusDeviation>k__BackingField: 3
+  <MinOrbitRadius>k__BackingField: 1
   <MaxOrbitRadius>k__BackingField: 5
   <MinElectronsPerPigtom>k__BackingField: 1
-  <MaxElectronsPerPigtom>k__BackingField: 4
-  <MinElectronOrbitingTime>k__BackingField: 7
+  <MaxElectronsPerPigtom>k__BackingField: 3
+  <MinElectronOrbitingTime>k__BackingField: 14
   <MaxElectronOrbitingTime>k__BackingField: 18
   <MinTapkes>k__BackingField: 2
   <MaxTapkes>k__BackingField: 3

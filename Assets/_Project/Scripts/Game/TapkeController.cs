@@ -108,7 +108,6 @@ public class TapkeController : MonoBehaviour
         if (Vector3.Distance(transform.position, _target) < 0.1f)
         {
             _isMoving = false;
-            Debug.Log(Time.time);
         }
     }
 

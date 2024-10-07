@@ -16,6 +16,7 @@ public class WorldCreatorSettings : ScriptableObject
 
     [field: SerializeField, Space] public float PigtomRadius { get; private set; }
     [field: SerializeField] public float PigtomRadiusDeviation { get; private set; }
+    [field: SerializeField] public float MinOrbitRadius { get; private set; }
     [field: SerializeField] public float MaxOrbitRadius { get; private set; }
     [field: SerializeField] public int MinElectronsPerPigtom { get; private set; }
     [field: SerializeField] public int MaxElectronsPerPigtom { get; private set; }

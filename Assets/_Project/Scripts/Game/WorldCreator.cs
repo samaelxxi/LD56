@@ -188,6 +188,7 @@ public class WorldCreator : MonoBehaviour
         pigtom.minOrbitTime = _worldCreatorSettings.MinElectronOrbitingTime;
         pigtom.maxOrbitTime = _worldCreatorSettings.MaxElectronOrbitingTime;
         pigtom.minOrbitRadius = radius + 1;
+        pigtom.minOrbitRadius = radius + 1 + _worldCreatorSettings.MinOrbitRadius;
         pigtom.maxOrbitRadius = radius + 1 + _worldCreatorSettings.MaxOrbitRadius;
 
         return pigtom;

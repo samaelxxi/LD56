@@ -38,9 +38,7 @@ public class ElectronsTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"{_electrons.Count} electrons in trigger");
-        foreach (var e in _electrons)
-            Debug.Log(e.name);
+
 
 
 
