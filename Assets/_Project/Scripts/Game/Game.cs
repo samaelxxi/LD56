@@ -60,9 +60,7 @@ public class Game : Singleton<Game>
 
     public void StartNewGame()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
+        HideCursor();
         _startTime = Time.time;
         _oatiumCollected = 0;
         _isGameOver = false;
@@ -72,8 +70,7 @@ public class Game : Singleton<Game>
 
     private void GameOver()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        ShowCursor();
         Game.Instance.PigUI.ShowGameOver();
 
         _isGameOver = true;
@@ -85,9 +82,22 @@ public class Game : Singleton<Game>
     {
         SceneManager.LoadSceneAsync("MainMenu");
         Time.timeScale = 1;
+        ShowCursor();
         _isGameOver = false;
         _isPaused = false;
         _gameIsRunning = false;
+    }
+
+    void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    void HideCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void PauseGame()
@@ -95,6 +105,7 @@ public class Game : Singleton<Game>
         Time.timeScale = 0;
         _isPaused = true;
         _gameIsRunning = false;
+        ShowCursor();
         Game.Instance.PigUI.ShowPauseMenu();
     }
 
@@ -103,6 +114,7 @@ public class Game : Singleton<Game>
         if (_isGameOver)
             return;
 
+        HideCursor();
         Time.timeScale = 1;
         _isPaused = false;
         _gameIsRunning = true;

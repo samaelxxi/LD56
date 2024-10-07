@@ -73,15 +73,11 @@ public class PigUI : MonoBehaviour
     public void ShowPauseMenu()
     {
         _pauseMenu.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = false;
     }
 
     public void HidePauseMenu()
     {
         _pauseMenu.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
         _controls.SetActive(false);
     }
 
