@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0ce82196466054ba70df964a5c23f0, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  FailSpawnChance: 0.495
+  FailSpawnChance: 0.3
   TapkeSpawnChance: 1
-  <GameSessionTimeSeconds>k__BackingField: 300
+  <GameSessionTimeSeconds>k__BackingField: 3000
   <MaxCollectedElectrons>k__BackingField: 3
   <OatCombination>k__BackingField:
     list:
@@ -32,3 +32,7 @@ MonoBehaviour:
     type: 3}
   <RandomStuffPrefabs>k__BackingField:
   - {fileID: 9002781141176489545, guid: c4cbd148fd02324448ba9cdd2115e675, type: 3}
+  <EasyWorldCreatorSettings>k__BackingField: {fileID: 11400000, guid: 38c0eaf16701ffd42a1e5f33224c831e,
+    type: 2}
+  <HardWorldCreatorSettings>k__BackingField: {fileID: 11400000, guid: ca07d694210221d40b53a6fb36d9c75b,
+    type: 2}

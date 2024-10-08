@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059e1f620668f1e40b2546374cfb0720, type: 3}
-  m_Name: WorldCreatorSettings
+  m_Name: HardWorldCreator
   m_EditorClassIdentifier: 
   <WorldCenter>k__BackingField: {x: 0, y: 0, z: 0}
-  <WorldSize>k__BackingField: {x: 300, y: 200, z: 300}
+  <WorldSize>k__BackingField: {x: 350, y: 250, z: 350}
   <PigtomPrefab>k__BackingField: {fileID: 3734303571725091256, guid: 3f22b45637fb510498d72a25c867c916,
     type: 3}
-  <PigtomsQuantity>k__BackingField: 35
+  <PigtomsQuantity>k__BackingField: 45
   <PigtomHoles>k__BackingField: 10
-  <DesiredAverageDistance>k__BackingField: 10
-  <DesiredAverageDistanceDeviation>k__BackingField: 5
+  <DesiredAverageDistance>k__BackingField: 15
+  <DesiredAverageDistanceDeviation>k__BackingField: 12
   <PigtomRadius>k__BackingField: 7
-  <PigtomRadiusDeviation>k__BackingField: 3
+  <PigtomRadiusDeviation>k__BackingField: 4
   <MinOrbitRadius>k__BackingField: 1
   <MaxOrbitRadius>k__BackingField: 5
-  <MinElectronsPerPigtom>k__BackingField: 1
-  <MaxElectronsPerPigtom>k__BackingField: 3
-  <MinElectronOrbitingTime>k__BackingField: 14
-  <MaxElectronOrbitingTime>k__BackingField: 18
-  <MinTapkes>k__BackingField: 2
-  <MaxTapkes>k__BackingField: 2
+  <MinElectronsPerPigtom>k__BackingField: 0
+  <MaxElectronsPerPigtom>k__BackingField: 4
+  <MinElectronOrbitingTime>k__BackingField: 10
+  <MaxElectronOrbitingTime>k__BackingField: 20
+  <MinTapkes>k__BackingField: 3
+  <MaxTapkes>k__BackingField: 4

@@ -8,6 +8,7 @@ public class WorldCreator : MonoBehaviour
     [SerializeField] private WorldCreatorSettings _worldCreatorSettings;
     [SerializeField] private float _maxIteration = 1000;
     [SerializeField] private float smallStepSize = 0.1f;
+    [SerializeField] private bool _realGame = true;
 
 
     List<Pigtom> _objects = new();
@@ -19,8 +20,10 @@ public class WorldCreator : MonoBehaviour
 
     void Start()
     {
+        if (_realGame)
+            _worldCreatorSettings = GameSettings.WorldCreatorSettings;
+
         GenerateWorld();
-        
     }
 
 

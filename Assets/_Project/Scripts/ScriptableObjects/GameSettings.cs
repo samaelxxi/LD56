@@ -21,9 +21,12 @@ public static class GameSettings
     public static float GameSessionTimeSeconds => _gameSettings.GameSessionTimeSeconds;
 
 
+    public static WorldCreatorSettings WorldCreatorSettings => HardMode ? _gameSettings.HardWorldCreatorSettings : _gameSettings.EasyWorldCreatorSettings;
+
     public static float FailSpawnChance => _gameSettings.FailSpawnChance;
     public static float TapkeSpawnChance => _gameSettings.TapkeSpawnChance;
 
 
     public static float MoveSensetivity { get; set; } = 1;
+    public static bool HardMode { get; set; } = false;
 }

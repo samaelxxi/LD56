@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using CarterGames.Assets.AudioManager;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] DialogWindow _dialogWindow;
     [SerializeField] GameObject _exitButton;
-    // Start is called before the first frame update
+    [SerializeField] Toggle _hardModeToggle;
+
+
     void Start()
     {
         _dialogWindow.GoGoGo();
+
+        _hardModeToggle.isOn = GameSettings.HardMode;
 
         #if UNITY_WEBGL
         _exitButton.SetActive(false);
@@ -27,5 +32,10 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.Play("click");
         Application.Quit();
+    }
+
+    public void SetHardMode(bool hardMode)
+    {
+        GameSettings.HardMode = hardMode;
     }
 }

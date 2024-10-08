@@ -23,6 +23,9 @@ public class GameSettingsSO : ScriptableObject, Services.IRegistrable, Services.
     [field: SerializeField] public Tapke TapkePrefab { get; private set; }
     [field: SerializeField] public List<GameObject> RandomStuffPrefabs { get; private set; }
 
+    [field: SerializeField] public WorldCreatorSettings EasyWorldCreatorSettings { get; private set; }
+    [field: SerializeField] public WorldCreatorSettings HardWorldCreatorSettings { get; private set; }
+
 
 
 

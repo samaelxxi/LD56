@@ -10,7 +10,6 @@ public class Oatium : MonoBehaviour
 
     public void Start()
     {
-        Debug.Log("Oatium is here!");
         float offset = Random.Range(0, 1f);
         _tween = transform.DOLocalMoveY(transform.localPosition.y + 1 * transform.localScale.y / 2, 2f).SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo).SetDelay(offset);
