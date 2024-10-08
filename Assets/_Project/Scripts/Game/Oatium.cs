@@ -34,7 +34,7 @@ public class Oatium : MonoBehaviour
     IEnumerator BeEaten()
     {
         _tween.Kill();
-        transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InBack);
+        transform.DOScale(Vector3.zero, 1.5f).SetEase(Ease.InOutSine);
         float time = Time.time;
         var pig = Game.Instance.QuatumPig.transform;
         Game.Instance.CollectOatium();
